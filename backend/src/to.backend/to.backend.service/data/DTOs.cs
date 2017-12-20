@@ -12,4 +12,11 @@
         public int NumberOfSubmissions;
         public string[] Items;
     }
+
+
+    public class ItemsResponse
+    {
+        public string Title;
+        public string[] Items;
+    }
 }

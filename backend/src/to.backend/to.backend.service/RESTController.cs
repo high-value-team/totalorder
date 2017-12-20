@@ -21,7 +21,7 @@ namespace to.backend.service
 
 
         [EntryPoint(HttpMethods.Get, "/api/v1/projects/{projectId}/summary")]
-        public ProjectSummaryResponse Summary(string projectId)
+        public ProjectSummaryResponse Generate_project_summary(string projectId)
         {
             Console.WriteLine($"summary for {projectId}");
 
@@ -29,6 +29,18 @@ namespace to.backend.service
                 Title = "Project " + projectId,
                 NumberOfSubmissions = DateTime.Now.Second,
                 Items = new[]{"item 2", "item 1", "item 3"}
+            };
+        }
+        
+        
+        [EntryPoint(HttpMethods.Get, "/api/v1/projects/{projectId}/items")]
+        public ItemsResponse Retrieve_project_items(string projectId)
+        {
+            Console.WriteLine($"items for {projectId}");
+
+            return new ItemsResponse {
+                Title = "Project " + projectId,
+                Items = new[]{"item 1", "item 2", "item 3"}
             };
         }
         
