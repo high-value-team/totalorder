@@ -2,16 +2,10 @@
 using System.Reflection;
 using servicehost.contract;
 using to.backend.adapters;
+using to.backend.service.data;
 
 namespace to.backend.service
 {
-    public class CreateProjectRequest {
-        public string Title;
-        public string Owner;
-        public string[] Items;
-    } 
-    
-    
     [Service]
     public class RESTControllerV1
     {
@@ -24,7 +18,19 @@ namespace to.backend.service
             var id = Guid.NewGuid().ToString();
             return id;
         }
-        
+
+
+        [EntryPoint(HttpMethods.Get, "/api/v1/projects/{projectId}/summary")]
+        public ProjectSummaryResponse Summary(string projectId)
+        {
+            Console.WriteLine($"summary for {projectId}");
+
+            return new ProjectSummaryResponse {
+                Title = "Project " + projectId,
+                NumberOfSubmissions = DateTime.Now.Second,
+                Items = new[]{"item 2", "item 1", "item 3"}
+            };
+        }
         
         
         [EntryPoint(HttpMethods.Get, "/api/v1/version")]

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="adapters\Config.cs" />
+    <Compile Include="data\DTOs.cs" />
     <Compile Include="RESTController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
