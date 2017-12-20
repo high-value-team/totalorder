@@ -13,7 +13,7 @@ namespace to.backend.service
         public string Create_project([Payload]CreateProjectRequest req)
         {
             var sampleItem = req.Items.Length > 0 ? req.Items[0] : "-";
-            Console.WriteLine($"create project: {req.Title}, {req.Owner}, {req.Items.Length} items, e.g. '{sampleItem}'");
+            Console.WriteLine($"create project: {req.Title}, {req.ProductOwnerEmail}, {req.Items.Length} items, e.g. '{sampleItem}'");
 
             var id = Guid.NewGuid().ToString();
             return id;
@@ -40,8 +40,19 @@ namespace to.backend.service
 
             return new ItemsResponse {
                 Title = "Project " + projectId,
-                Items = new[]{"item 1", "item 2", "item 3"}
+                Items = new[] {
+                    new ItemsResponse.Item{Id = "a", Text = "Item 1"}, 
+                    new ItemsResponse.Item{Id = "b", Text = "Item 2"},
+                    new ItemsResponse.Item{Id = "c", Text = "Item 3"}
+                }
             };
+        }
+
+
+        [EntryPoint(HttpMethods.Post, "/api/v1/projects/{projectId}/submissions")]
+        public void Submit_ordered_items(string projectId, [Payload] TotalOrderSubmission req) {
+            var ids = string.Join(",", req.ItemIds);
+            Console.WriteLine($"submission: {req.StakeholderEmail}, {ids}");
         }
         
         

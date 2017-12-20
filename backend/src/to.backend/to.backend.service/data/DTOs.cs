@@ -2,7 +2,7 @@
 {
     public class CreateProjectRequest {
         public string Title;
-        public string Owner;
+        public string ProductOwnerEmail;
         public string[] Items;
     }
     
@@ -16,7 +16,20 @@
 
     public class ItemsResponse
     {
+        public class Item
+        {
+            public string Id;
+            public string Text;
+        }
+        
         public string Title;
-        public string[] Items;
+        public ItemsResponse.Item[] Items;
+    }
+
+
+    public class TotalOrderSubmission
+    {
+        public string StakeholderEmail;
+        public string[] ItemIds;
     }
 }

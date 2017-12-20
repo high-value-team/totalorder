@@ -2,14 +2,14 @@
 ## V1
 ### GET {{ domain  }}/api/v1/version
 #### Response
-Versioninformation
+`200` + Versionsinformation
 ### POST {{ domain  }}/api/v1/projects
 #### Request
 Beispiel:
 ```
 {
 	"title": "Some project",
-	"owner": "mary@acme.com",
+	"productowneremail": "mary@acme.com",
 	"items": [
 		"item 1",
 		"item 2",
@@ -18,10 +18,10 @@ Beispiel:
 }
 ```
 #### Response
-Id des Projektes
+`200` + Id des Projektes
 ### GET {{ domain  }}/api/v1/projects/{projectId}/summary
 #### Response
-Beispiel:
+`200` + Beispiel:
 ```
 {
 	"title": "Project 1234",
@@ -33,3 +33,36 @@ Beispiel:
 	]
 }
 ```
+### GET {{ domain  }}/api/v1/projects/{projectId}/items
+#### Response
+`200` + Beispiel:
+```
+{
+	"title": "Project 1234",
+	"items": [
+		{
+			"id": "a",
+			"text": "Item 1"
+		},
+		{
+			"id": "b",
+			"text": "Item 2"
+		},
+		{
+			"id": "c",
+			"text": "Item 3"
+		}
+	]
+}
+```
+### POST {{ domain  }}/api/v1/projects/{projectId}/submissions
+#### Request
+Beispiel:
+```
+{
+	"stakeholderemail":"bruce@acme.com",
+	"itemids":["c","b","a"]
+}
+```
+#### Response
+`200`
