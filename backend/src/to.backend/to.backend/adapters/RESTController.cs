@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Reflection;
 using servicehost.contract;
-using to.backend.adapters;
-using to.backend.service.data;
+using to.backend.dto;
 
-namespace to.backend.service
+namespace to.backend.adapters
 {
     [Service]
     public class RESTControllerV1
     {
         [EntryPoint(HttpMethods.Post, "/api/v1/projects")]
-        public string Create_project([Payload]CreateProjectRequest req)
+        public string Create_project([Payload]CreateProjectRequestDto req)
         {
             var sampleItem = req.Items.Length > 0 ? req.Items[0] : "-";
             Console.WriteLine($"create project: {req.Title}, {req.ProductOwnerEmail}, {req.Items.Length} items, e.g. '{sampleItem}'");
@@ -21,11 +20,11 @@ namespace to.backend.service
 
 
         [EntryPoint(HttpMethods.Get, "/api/v1/projects/{projectId}/summary")]
-        public ProjectSummaryResponse Generate_project_summary(string projectId)
+        public ProjectSummaryResponseDto Generate_project_summary(string projectId)
         {
             Console.WriteLine($"summary for {projectId}");
 
-            return new ProjectSummaryResponse {
+            return new ProjectSummaryResponseDto {
                 Title = "Project " + projectId,
                 NumberOfSubmissions = DateTime.Now.Second,
                 Items = new[]{"item 2", "item 1", "item 3"}
@@ -34,23 +33,23 @@ namespace to.backend.service
         
         
         [EntryPoint(HttpMethods.Get, "/api/v1/projects/{projectId}/items")]
-        public ItemsResponse Retrieve_project_items(string projectId)
+        public ItemsResponseDto Retrieve_project_items(string projectId)
         {
             Console.WriteLine($"items for {projectId}");
 
-            return new ItemsResponse {
+            return new ItemsResponseDto {
                 Title = "Project " + projectId,
-                Items = new[] {
-                    new ItemsResponse.Item{Id = "a", Text = "Item 1"}, 
-                    new ItemsResponse.Item{Id = "b", Text = "Item 2"},
-                    new ItemsResponse.Item{Id = "c", Text = "Item 3"}
+                ItemsDto = new[] {
+                    new ItemsResponseDto.ItemDto{Id = "a", Text = "Item 1"}, 
+                    new ItemsResponseDto.ItemDto{Id = "b", Text = "Item 2"},
+                    new ItemsResponseDto.ItemDto{Id = "c", Text = "Item 3"}
                 }
             };
         }
 
 
         [EntryPoint(HttpMethods.Post, "/api/v1/projects/{projectId}/submissions")]
-        public void Submit_ordered_items(string projectId, [Payload] TotalOrderSubmission req) {
+        public void Submit_ordered_items(string projectId, [Payload] TotalOrderSubmissionDto req) {
             var ids = string.Join(",", req.ItemIds);
             Console.WriteLine($"submission: {req.StakeholderEmail}, {ids}");
         }

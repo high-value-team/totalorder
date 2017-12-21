@@ -33,13 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="appcfg, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="servicehost.contract, Version=2.3.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\servicehost.contract.2.3.2\lib\net45\servicehost.contract.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -49,9 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="adapters\Config.cs" />
-    <Compile Include="data\DTOs.cs" />
-    <Compile Include="RESTController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
