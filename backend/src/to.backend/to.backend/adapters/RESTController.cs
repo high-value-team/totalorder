@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using servicehost.contract;
+using to.backend.contract;
 using to.backend.dto;
 
 namespace to.backend.adapters
@@ -8,14 +9,14 @@ namespace to.backend.adapters
     [Service]
     public class RESTControllerV1
     {
+        public static Func<IRequestHandler> __RequestHandler;
+        
+        
         [EntryPoint(HttpMethods.Post, "/api/v1/projects")]
-        public string Create_project([Payload]CreateProjectRequestDto req)
-        {
-            var sampleItem = req.Items.Length > 0 ? req.Items[0] : "-";
-            Console.WriteLine($"create project: {req.Title}, {req.ProductOwnerEmail}, {req.Items.Length} items, e.g. '{sampleItem}'");
+        public string Create_project([Payload]CreateProjectRequestDto req) {
+            Console.WriteLine($"create project: {req.Title}, {req.ProductOwnerEmail}, {req.Items.Length} items");
 
-            var id = Guid.NewGuid().ToString();
-            return id;
+            return __RequestHandler().Create_project(req.Title, req.ProductOwnerEmail, req.Items);
         }
 
 

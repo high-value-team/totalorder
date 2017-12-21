@@ -71,11 +71,16 @@
     <Compile Include="dto\TotalOrderSubmissionDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\to.backend.contract\to.backend.contract.csproj">
+      <Project>{6aeb427c-b687-4aa8-8bc6-0b2591b38139}</Project>
+      <Name>to.backend.contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\to.backend.service\to.backend.service.csproj">
       <Project>{e97300fb-50a8-4213-be88-55acec0045ee}</Project>
       <Name>to.backend.service</Name>
