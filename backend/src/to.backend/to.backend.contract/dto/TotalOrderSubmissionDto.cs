@@ -1,4 +1,4 @@
-﻿namespace to.backend.dto
+﻿namespace to.backend.contract.dto
 {
     public class TotalOrderSubmissionDto
     {

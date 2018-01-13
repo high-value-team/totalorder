@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using to.backend.service.data;
 
 namespace to.backend.service.adapters
 {
@@ -47,7 +48,7 @@ namespace to.backend.service.adapters
 
         public void Add_item_order_to_project(string projectId, ItemOrder itemOrder) {
             var itemOrderJson = _json.Serialize(itemOrder);
-            File.WriteAllText(new ItemOrderFilepath(_path, projectId, itemOrder.SubmissionEmail).Value, itemOrderJson);
+            File.WriteAllText(new ItemOrderFilepath(_path, projectId, itemOrder.StakeholderEmail).Value, itemOrderJson);
         }
         
         
@@ -62,8 +63,8 @@ namespace to.backend.service.adapters
         
         private class ItemOrderFilepath
         {
-            public ItemOrderFilepath(string repoPath, string projectId, string submissionEmail) {
-                Value = Path.Combine(repoPath, $"{projectId}-{submissionEmail}.json");
+            public ItemOrderFilepath(string repoPath, string projectId, string stakeholderEmail) {
+                Value = Path.Combine(repoPath, $"{projectId}-{stakeholderEmail}.json");
             }
 
             public string Value { get; }

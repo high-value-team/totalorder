@@ -2,10 +2,17 @@
 using System.Reflection;
 using servicehost.contract;
 using to.backend.contract;
-using to.backend.dto;
+using to.backend.contract.dto;
 
 namespace to.backend.adapters
 {
+    /*
+     * Responsible for communication:
+     *     - routing requests
+     *     - (de)serialization of DTOs
+     *
+     * Incidentally there's not much to do due to the high level of abstraction the servicehost provides.
+     */
     [Service]
     public class RESTControllerV1
     {
@@ -16,7 +23,7 @@ namespace to.backend.adapters
         public string Create_project([Payload]CreateProjectRequestDto req) {
             Console.WriteLine($"create project: {req.Title}, {req.ProductOwnerEmail}, {req.Items.Length} items");
 
-            return __RequestHandler().Create_project(req.Title, req.ProductOwnerEmail, req.Items);
+            return __RequestHandler().Create_project(req);
         }
 
 
@@ -40,7 +47,7 @@ namespace to.backend.adapters
 
             return new ItemsResponseDto {
                 Title = "Project " + projectId,
-                ItemsDto = new[] {
+                ItemDtos = new[] {
                     new ItemsResponseDto.ItemDto{Id = "a", Text = "Item 1"}, 
                     new ItemsResponseDto.ItemDto{Id = "b", Text = "Item 2"},
                     new ItemsResponseDto.ItemDto{Id = "c", Text = "Item 3"}

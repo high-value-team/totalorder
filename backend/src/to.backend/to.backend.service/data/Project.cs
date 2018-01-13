@@ -1,4 +1,4 @@
-﻿namespace to.backend.service
+﻿namespace to.backend.service.data
 {
     public class Project
     {
@@ -11,7 +11,7 @@
 
     public class ItemOrder
     {
-        public string SubmissionEmail;
+        public string StakeholderEmail;
         public string[] ItemIds;
     }
 }

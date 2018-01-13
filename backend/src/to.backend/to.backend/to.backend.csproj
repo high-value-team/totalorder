@@ -65,10 +65,6 @@
   <ItemGroup>
     <Compile Include="adapters\Config.cs" />
     <Compile Include="adapters\RESTController.cs" />
-    <Compile Include="dto\CreateProjectRequestDto.cs" />
-    <Compile Include="dto\ItemsResponseDto.cs" />
-    <Compile Include="dto\ProjectSummaryResponseDto.cs" />
-    <Compile Include="dto\TotalOrderSubmissionDto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />

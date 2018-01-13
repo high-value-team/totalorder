@@ -1,4 +1,4 @@
-﻿namespace to.backend.dto
+﻿namespace to.backend.contract.dto
 {
     public class ItemsResponseDto
     {
@@ -8,6 +8,6 @@
         }
         
         public string Title;
-        public ItemsResponseDto.ItemDto[] ItemsDto;
+        public ItemsResponseDto.ItemDto[] ItemDtos;
     }
 }

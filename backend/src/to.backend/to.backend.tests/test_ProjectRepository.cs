@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using to.backend.service;
 using to.backend.service.adapters;
+using to.backend.service.data;
 
 namespace to.backend.tests
 {
@@ -51,14 +52,14 @@ namespace to.backend.tests
             };
             var id = sut.Create(prj);
             
-            sut.Add_item_order_to_project(id, new ItemOrder{SubmissionEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
-            sut.Add_item_order_to_project(id, new ItemOrder{SubmissionEmail = "s2@acme.com", ItemIds = new[]{"2","1","0"}});
+            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
+            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s2@acme.com", ItemIds = new[]{"2","1","0"}});
             
             var loadedPrj = sut.Load(id);
             Assert.AreEqual(2,loadedPrj.ItemOrders.Length);
-            Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].SubmissionEmail);
+            Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].StakeholderEmail);
             Assert.AreEqual(new[]{"0", "1", "2"}, loadedPrj.ItemOrders[0].ItemIds);
-            Assert.AreEqual("s2@acme.com", loadedPrj.ItemOrders[1].SubmissionEmail);
+            Assert.AreEqual("s2@acme.com", loadedPrj.ItemOrders[1].StakeholderEmail);
             Assert.AreEqual(new[]{"2", "1", "0"}, loadedPrj.ItemOrders[1].ItemIds);
         }
         
@@ -74,12 +75,12 @@ namespace to.backend.tests
             };
             var id = sut.Create(prj);
             
-            sut.Add_item_order_to_project(id, new ItemOrder{SubmissionEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
-            sut.Add_item_order_to_project(id, new ItemOrder{SubmissionEmail = "s1@acme.com", ItemIds = new[]{"2","1","0"}});
+            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
+            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"2","1","0"}});
             
             var loadedPrj = sut.Load(id);
             Assert.AreEqual(1,loadedPrj.ItemOrders.Length);
-            Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].SubmissionEmail);
+            Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].StakeholderEmail);
             Assert.AreEqual(new[]{"2", "1", "0"}, loadedPrj.ItemOrders[0].ItemIds);
         }
     }
