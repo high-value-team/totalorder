@@ -6,7 +6,7 @@ namespace to.backend.service
 {
     public class TotalOrder
     {
-        public static string[] Calculate(IEnumerable<string[]> itemOrders)
+        public static string[] Calculate(string[][] itemOrders)
         {
             if (!itemOrders.Any()) return new string[0];
             

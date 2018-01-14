@@ -28,7 +28,7 @@ namespace to.backend.service
         
         public ProjectSummaryResponseDto Generate_project_summary(string projectId) {
             var prj = _repo.Load(projectId);
-            var totalOrder = TotalOrder.Calculate(prj.ItemOrders.Select(io => io.ItemIds));
+            var totalOrder = TotalOrder.Calculate(prj.ItemOrders.Select(io => io.ItemIds).ToArray());
             return new ProjectSummaryResponseDto {
                 Title = prj.Title,
                 Items = Map(prj.Items, totalOrder).ToArray(),

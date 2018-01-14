@@ -44,9 +44,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test_ProjectRepository.cs" />
+    <Compile Include="test_RequestHandler.cs" />
     <Compile Include="test_TotalOrder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\to.backend.contract\to.backend.contract.csproj">
+      <Project>{6AEB427C-B687-4AA8-8BC6-0B2591B38139}</Project>
+      <Name>to.backend.contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\to.backend.service\to.backend.service.csproj">
       <Project>{E97300FB-50A8-4213-BE88-55ACEC0045EE}</Project>
       <Name>to.backend.service</Name>

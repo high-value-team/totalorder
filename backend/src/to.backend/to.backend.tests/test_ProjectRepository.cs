@@ -38,6 +38,55 @@ namespace to.backend.tests
             Assert.AreEqual(prj.Items, loadedPrj.Items);
             Assert.AreEqual(0, loadedPrj.ItemOrders.Length);
         }
+        
+        
+        [Test]
+        public void Creat_project_with_given_id()
+        {
+            var sut = new ProjectRepository(REPO_PATH);
+
+            var prj = new Project {
+                Id = "myproject",
+                Title = "T1",
+                ProductOwnerEmail = "po@acme.com",
+                Items = new[]{"a", "b", "c"}
+            };
+            var id = sut.Create(prj);
+            Assert.AreEqual("myproject", id);
+
+            var loadedPrj = sut.Load(id);
+            
+            Assert.AreEqual(id, loadedPrj.Id);
+            Assert.AreEqual(prj.Title, loadedPrj.Title);
+        }
+        
+        
+        [Test]
+        public void Project_with_given_id_overwrites_previous()
+        {
+            var sut = new ProjectRepository(REPO_PATH);
+
+            var prj = new Project {
+                Id = "myproject",
+                Title = "T1",
+                ProductOwnerEmail = "po@acme.com",
+                Items = new[]{"a", "b", "c"}
+            };
+            sut.Create(prj);
+            
+            var prjOverwritten = new Project {
+                Id = "myproject",
+                Title = "Toverwritten",
+                ProductOwnerEmail = "po@acme.com",
+                Items = new[]{"x", "y", "z"}
+            };
+            sut.Create(prjOverwritten);
+
+            var loadedPrj = sut.Load("myproject");
+            
+            Assert.AreEqual(prjOverwritten.Title, loadedPrj.Title);
+        }
+
 
 
         [Test]

@@ -17,7 +17,8 @@ namespace to.backend.service.adapters
         }
         
         public string Create(Project project) {
-            project.Id = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(project.Id))
+                project.Id = Guid.NewGuid().ToString();
             
             var projectJson = _json.Serialize(project);
             File.WriteAllText(new ProjectFilepath(_path, project.Id).Value, projectJson);
