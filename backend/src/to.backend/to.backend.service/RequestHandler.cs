@@ -18,6 +18,7 @@ namespace to.backend.service
         
         public string Create_project(CreateProjectRequestDto req) {
             var prj = new Project {
+                Id = req.Id,
                 Title = req.Title,
                 ProductOwnerEmail = req.ProductOwnerEmail,
                 Items = req.Items

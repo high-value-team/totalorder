@@ -34,23 +34,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="appcfg, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\lib\appcfg\appcfg.dll</HintPath>
+      <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <HintPath>..\packages\Mono.Posix.4.0.0.0\lib\net40\Mono.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy, Version=1.4.4.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Nancy.1.4.4\lib\net40\Nancy.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy.Hosting.Self, Version=1.4.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Nancy.Hosting.Self.1.4.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
-    </Reference>
-    <Reference Include="servicehost, Version=2.8.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\lib\servicehost\servicehost.exe</HintPath>
+    <Reference Include="servicehost, Version=2.8.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\servicehost.2.8.1\lib\net45\servicehost.exe</HintPath>
     </Reference>
     <Reference Include="servicehost.contract, Version=2.3.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\lib\servicehost\servicehost.contract.dll</HintPath>
+      <HintPath>..\packages\servicehost.contract.2.3.1\lib\net45\servicehost.contract.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
