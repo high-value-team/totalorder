@@ -36,7 +36,9 @@ namespace to.backend.service
             };
 
             IEnumerable<string> Map(string[] items, string[] order)
-                => order.Select(itemId => items[int.Parse(itemId)]);
+                => order.Length == 0 
+                        ? items 
+                        : order.Select(itemId => items[int.Parse(itemId)]);
         }
         
 
