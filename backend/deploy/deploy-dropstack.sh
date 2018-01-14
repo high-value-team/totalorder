@@ -4,6 +4,7 @@ source dropstack/environment.sh
 rm -fr ../deployed.dropstack
 mkdir ../deployed.dropstack
 cp ../bin/*.* ../deployed.dropstack
+cp dropstack/.dropstack.json ../deployed.dropstack
 cp dropstack/Dockerfile ../deployed.dropstack
 
 cd ../deployed.dropstack
