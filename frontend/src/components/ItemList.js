@@ -13,6 +13,13 @@ const styles = theme => ({
         fontFamily: 'Roboto, sans-serif',
         width: '100%',
     },
+    orderedList: {
+        listStyleType: 'none',
+        padding: '0px',
+    },
+    listItem: {
+
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -40,6 +47,9 @@ class ItemList extends React.Component {
     }
 
     add () {
+        if (this.state.newItem.length == 0) {
+            return;
+        }
         const items = [...this.props.items, this.state.newItem];
         this.props.onChangeItems(items);
         this.setState({newItem:''});
@@ -67,9 +77,9 @@ class ItemList extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <ol>
+                <ol className={classes.orderedList}>
                     {this.props.items.map( (item, index) => {
-                        return <li key={index}>
+                        return <li key={index} className={classes.listItem}>
                             <TextField
                                 id="newItem"
                                 label=""

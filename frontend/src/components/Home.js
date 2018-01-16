@@ -15,6 +15,9 @@ const styles = theme => ({
         fontFamily: 'Roboto, sans-serif',
         width: '100%',
     },
+    paper: {
+        padding: '30px',
+    },
     container: {
     },
     title: {
@@ -34,8 +37,10 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginTop: theme.spacing.unit * 3,
     },
-    label: {
+    headline: {
         margin: '8px',
+        marginTop: '50px',
+        color: '#0000008a',
     },
 });
 
@@ -81,7 +86,7 @@ class Home extends React.Component {
 
         return (
             <div className={classes.root}>
-                <Paper className={classes.root} elevation={4}>
+                <Paper className={classes.paper} elevation={4}>
                     <Typography className={classes.title} type="display2" gutterBottom={true}>Create Project</Typography>
                     <div>
                         <TextField
@@ -106,10 +111,10 @@ class Home extends React.Component {
                         />
                     </div>
 
-                    <Typography type="display1" className={classes.label}>Items to order:</Typography>
+                    <Typography type="headline" className={classes.headline}>Items to order:</Typography>
                     <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
 
-                    <Typography type="display1" className={classes.label}>Add batch of Items:</Typography>
+                    <Typography type="headline" className={classes.headline}>Add batch of Items:</Typography>
                     <BatchItems onNewBatch={(items) => this.appendItems(items)}/>
 
                     <div>

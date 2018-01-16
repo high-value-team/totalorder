@@ -14,13 +14,23 @@ const styles = theme => ({
         fontFamily: 'Roboto, sans-serif',
         width: '100%',
     },
+    row: {
+        display: 'flex',
+    },
+    col: {
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: '300px'
     },
+    buttonWrap: {
+        position: 'relative',
+    },
     button: {
-
+        position: 'absolute',
+        bottom: '15px',
+        left: '0',
     },
 });
 
@@ -49,21 +59,21 @@ class BatchItems extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div className={classes.row}>
                 <TextField
                     id="multiline-static"
                     label="Füge Textzeilen als Items hinzu"
                     multiline
                     rows="10"
                     value={this.state.batchContent}
-                    className={classes.textField}
+                    className={[classes.textField, classes.col].join(' ')}
                     margin="normal"
                     fullWidth
                     onChange={(e)=> this.setState({batchContent: e.target.value})}
                 />
-                <Button fab mini color="primary" aria-label="add" className={classes.button} onClick={this.handleBatch}>
-                    <AddIcon />
-                </Button>
+                <div className={[classes.buttonWrap, classes.col].join(' ')}>
+                    <AddIcon className={classes.button} onClick={this.handleBatch}/>
+                </div>
             </div>
         );
     }
