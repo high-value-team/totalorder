@@ -62,7 +62,7 @@ class BatchItems extends React.Component {
             <div className={classes.row}>
                 <TextField
                     id="multiline-static"
-                    label="Füge Textzeilen als Items hinzu"
+                    // label="Füge Textzeilen als Items hinzu"
                     multiline
                     rows="10"
                     value={this.state.batchContent}
