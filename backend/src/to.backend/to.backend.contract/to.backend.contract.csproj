@@ -43,6 +43,7 @@
     <Compile Include="dto\ItemsResponseDto.cs" />
     <Compile Include="dto\ProjectSummaryResponseDto.cs" />
     <Compile Include="dto\TotalOrderSubmissionDto.cs" />
+    <Compile Include="IMailProvider.cs" />
     <Compile Include="IRequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

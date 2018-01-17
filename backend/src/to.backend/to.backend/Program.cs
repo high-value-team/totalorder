@@ -11,7 +11,8 @@ namespace to.backend
             Config.Load(args);
             
             var repo = new ProjectRepository(Config.DbPath);
-            var rh = new RequestHandler(repo);
+            var mail = new MailgunMailProvider();
+            var rh = new RequestHandler(repo, mail);
             var server = new Server(rh);
             
             server.Run(Config.Address);
