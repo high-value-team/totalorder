@@ -21,9 +21,8 @@ class HomeContainer extends React.Component {
 
     render () {
         return (
-            <Home
-                submitProject={boxActionCreators.submitProject}
-            />
+
+            <Home submitProject={this.props.submitProject} />
         );
     }
 }
