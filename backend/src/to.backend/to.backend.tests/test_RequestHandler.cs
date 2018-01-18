@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using NUnit.Framework;
+using to.backend.contract;
 using to.backend.contract.dto;
 using to.backend.service;
 using to.backend.service.adapters;
@@ -21,7 +23,8 @@ namespace to.backend.tests
         public void Get_project_estimated()
         {
             var repo = new ProjectRepository(REPO_PATH);
-            var sut = new RequestHandler(repo);
+            var mail = new MockMailProvider();
+            var sut = new RequestHandler(repo, mail);
 
             // create project
             var prjId = sut.Create_project(new CreateProjectRequestDto {
@@ -69,6 +72,15 @@ namespace to.backend.tests
             summary = sut.Generate_project_summary(prjId);
             Assert.AreEqual(2, summary.NumberOfSubmissions);
             Assert.AreEqual(new[]{"c", "a", "b"}, summary.Items);   
+        }
+
+
+        class MockMailProvider : IMailProvider
+        {
+            public void Send_notification(string toEmail, string subject, string text)
+            {
+                Console.WriteLine($"Sending mail: {toEmail}, {subject}, {text}");
+            }
         }
     }
 }
