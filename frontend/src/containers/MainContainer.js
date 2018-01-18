@@ -24,6 +24,8 @@ const styles = theme => ({
 class MainContainer extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        loadVersion: PropTypes.func.isRequired,
+        version: PropTypes.string.isRequired,
         children: PropTypes.node,
     };
 
@@ -31,28 +33,9 @@ class MainContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            version: '',
-        }
-    }
-
     componentDidMount() {
-        this.callApi()
-            .then(res => this.setState({ version: res }))
-            .catch(err => console.log(err));
+        this.props.loadVersion();
     }
-
-    callApi = async () => {
-        const response = await fetch('/api/v1/version');
-        const body = await response.text();
-
-        if (response.status !== 200) throw Error("wrong status code, expected 200");
-
-        return body;
-    };
-
 
     render () {
         const { classes } = this.props;
@@ -61,7 +44,7 @@ class MainContainer extends React.Component {
                 {/*<Navigation title={'Totalorder'}/>*/}
                 <div className={classes.innerContainer}>
                     {this.props.children}
-                    <p className="App-intro">{this.state.version}</p>
+                    <p className="App-intro">{this.props.version}</p>
                 </div>
             </div>
         );
@@ -69,7 +52,7 @@ class MainContainer extends React.Component {
 }
 
 function mapStateToProps (state) {
-    return state;
+    return {version: state.project.version};
 }
 
 function mapDispatchToProps (dispatch) {

@@ -49,10 +49,19 @@ class BatchItems extends React.Component {
     }
 
     handleBatch () {
-        const items = this.state.batchContent.split('\n').filter(item => item.length > 0);
+        var items = this.state.batchContent.split('\n').filter(item => item.length > 0);
+        items = items.map((item) => ({
+                id: this.randomID(),
+                text: item,
+            }
+        ));
         console.log(items.length);
         this.props.onNewBatch(items);
         this.setState({batchContent: ''});
+    }
+
+    randomID() {
+        return Math.random().toString(16).slice(-4);
     }
 
     render() {

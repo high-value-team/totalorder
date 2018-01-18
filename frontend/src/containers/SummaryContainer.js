@@ -46,16 +46,6 @@ class SummaryContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        // console.log(`projectID:${props.router.params.projectID}`);
-        // console.log(JSON.stringify(props.router,  null, 2));
-
-        // this.state = {
-        //     projectID: props.router.params.projectID,
-        // }
-    }
-
     componentDidMount() {
         this.props.loadSummary(this.props.projectID)
     }

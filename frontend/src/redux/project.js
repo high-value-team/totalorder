@@ -9,6 +9,7 @@ const CHANGING_ORDER = 'CHANGING_ORDER';
 const NEW_ID = 'NEW_ID';
 const LOAD_SUMMARY = 'LOAD_SUMMARY';
 const LOAD_ITEMS = 'LOAD_ITEMS';
+const LOAD_VERSION = 'LOAD_VERSION';
 
 //
 // actions
@@ -19,7 +20,7 @@ export function submitProject(project, changeRoute) {
         createProject(project.title, project.email, project.items)
             .then((projectID) => {
                 dispatch(newID(projectID));
-                dispatch(changeRoute(`/${projectID}/invitation`));
+                changeRoute(`/${projectID}/invitation`);
                 console.log('Success in submitProject, projectID:', projectID);
             })
             .catch((err) => {
@@ -32,7 +33,7 @@ export function submitOrder(projectID, stakeholderemail, items, changeRoute) {
     return function(dispatch) {
         createOrder(projectID, stakeholderemail, items)
             .then(() => {
-                dispatch(changeRoute(`/${projectID}/thank-you`));
+                changeRoute(`/${projectID}/thank-you`);
                 console.log('Success in createOrder');
             })
             .catch((err) => {
@@ -90,6 +91,20 @@ export function loadItems(projectID) {
     }
 }
 
+export function loadVersion() {
+    return function(dispatch) {
+        getVersion()
+            .then((version) => {
+                dispatch({
+                    type: LOAD_VERSION,
+                    version: version,
+                });
+            })
+            .catch((err) => {
+                console.warn('Error in loadVersion:', err);
+            });
+    }
+}
 //
 // reducers
 //
@@ -105,6 +120,7 @@ const initialState = {
         {id: 'c', text: 'item 3'},
     ],
     numberOfSubmissions: 0,
+    version: '',
 };
 
 export default function project (state = initialState, action) {
@@ -140,6 +156,11 @@ export default function project (state = initialState, action) {
                 title: action.title,
                 items: action.items,
             };
+        case LOAD_VERSION:
+            return {
+                ...state,
+                version: action.version,
+            };
         default :
             return state;
     }
@@ -148,6 +169,9 @@ export default function project (state = initialState, action) {
 //
 // helpers
 //
+
+// const baseURL = 'https://us-central1-totalorder-4bafb.cloudfunctions.net/api';
+const baseURL = 'https://totalorder-backend.cloud.dropstack.run';
 
 function createProject(title, email, items) {
     const itemList = items.map((item) => item.text);
@@ -162,7 +186,40 @@ function createProject(title, email, items) {
 
     return new Promise((resolve, reject) => {
         // fetch('https://totalorder-backend.cloud.dropstack.run/api/v1/projects', {
-        fetch('/api/v1/projects', {
+        // fetch('/api/v1/projects', {
+        fetch(`${baseURL}/api/v1/projects`, {
+            // mode: 'no-cors',
+            method: 'POST',
+            headers,
+            body,
+        }).then(resp => {
+            if (resp.ok) {
+                resp.text().then(projectID => {
+                    resolve(projectID);
+                });
+            } else {
+                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
+                reject(`API endpoint failed: resp: ${resp}`);
+            }
+        }).catch(err => {
+            reject(err);
+        });
+    });
+}
+
+function createOrder(projectID, stakeholderemail, items) {
+    const itemids = items.map((item) => item.id);
+    const body = JSON.stringify({
+        stakeholderemail: stakeholderemail,
+        itemids: itemids,
+    });
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Content-Length', body.length);
+
+    return new Promise((resolve, reject) => {
+        // fetch(`/api/v1/projects/${projectID}/submissions`, {
+        fetch(`${baseURL}/api/v1/projects/${projectID}/submissions`, {
             // mode: 'no-cors',
             method: 'POST',
             headers,
@@ -182,41 +239,11 @@ function createProject(title, email, items) {
     });
 }
 
-function createOrder(projectID, stakeholderemail, items) {
-    const itemids = items.map((item) => item.id);
-    const body = JSON.stringify({
-        stakeholderemail: stakeholderemail,
-        itemids: itemids,
-    });
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Content-Length', body.length);
-
-    return new Promise((resolve, reject) => {
-        fetch(`/api/v1/projects/${projectID}/submissions`, {
-            method: 'POST',
-            headers,
-            body,
-        }).then(resp => {
-            if (resp.ok) {
-                resp.text().then(projectID => {
-                    resolve(projectID);
-                });
-            } else {
-                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-
-
 function getSummary(projectID) {
     return new Promise((resolve, reject) => {
-        fetch(`/api/v1/projects/${projectID}/summary`, {
+        // fetch(`/api/v1/projects/${projectID}/summary`, {
+        fetch(`${baseURL}/api/v1/projects/${projectID}/summary`, {
+            // mode: 'no-cors',
             method: 'GET',
         }).then(resp => {
             if (resp.ok) {
@@ -235,7 +262,9 @@ function getSummary(projectID) {
 
 function getItems(projectID) {
     return new Promise((resolve, reject) => {
-        fetch(`/api/v1/projects/${projectID}/items`, {
+        // fetch(`/api/v1/projects/${projectID}/items`, {
+        fetch(`${baseURL}/api/v1/projects/${projectID}/items`, {
+            // mode: 'no-cors',
             method: 'GET',
         }).then(resp => {
             if (resp.ok) {
@@ -251,4 +280,28 @@ function getItems(projectID) {
         });
     });
 }
+
+function getVersion() {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseURL}/api/v1/version`, {
+            // mode: 'no-cors',
+            method: 'GET',
+        }).then(resp => {
+            // console.log(`resp:${JSON.stringify(, null, 2)}`);
+            // console.log(`resp.ok:${resp.ok}`);
+            if (resp.ok) {
+                resp.text().then(version => {
+                    console.log(`version:${version}`);
+                    resolve(version);
+                });
+            } else {
+                console.warn(`getVersion():${JSON.stringify(resp, null, 2)}`);
+                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
+            }
+        }).catch(err => {
+            reject(err);
+        });
+    });
+}
+
 
