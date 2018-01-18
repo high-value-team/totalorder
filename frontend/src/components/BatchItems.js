@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import AddIcon from 'material-ui-icons/Add';
-import Button from 'material-ui/Button';
 
 
 const styles = theme => ({
@@ -50,10 +49,19 @@ class BatchItems extends React.Component {
     }
 
     handleBatch () {
-        const items = this.state.batchContent.split('\n').filter(item => item.length > 0);
+        var items = this.state.batchContent.split('\n').filter(item => item.length > 0);
+        items = items.map((item) => ({
+                id: this.randomID(),
+                text: item,
+            }
+        ));
         console.log(items.length);
         this.props.onNewBatch(items);
         this.setState({batchContent: ''});
+    }
+
+    randomID() {
+        return Math.random().toString(16).slice(-4);
     }
 
     render() {
@@ -62,7 +70,6 @@ class BatchItems extends React.Component {
             <div className={classes.row}>
                 <TextField
                     id="multiline-static"
-                    // label="Füge Textzeilen als Items hinzu"
                     multiline
                     rows="10"
                     value={this.state.batchContent}
