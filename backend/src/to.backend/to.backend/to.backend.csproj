@@ -37,8 +37,8 @@
       <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="servicehost, Version=2.8.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\servicehost.2.8.1\lib\net45\servicehost.exe</HintPath>
+    <Reference Include="servicehost, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\servicehost.2.9.0\lib\net45\servicehost.exe</HintPath>
     </Reference>
     <Reference Include="servicehost.contract, Version=2.3.1.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\servicehost.contract.2.3.1\lib\net45\servicehost.contract.dll</HintPath>
