@@ -44,7 +44,7 @@ const styles = theme => ({
     },
 });
 
-class Home extends React.Component {
+class CreateProjectPage extends React.Component {
 
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -66,7 +66,7 @@ class Home extends React.Component {
     }
 
     createProject () {
-        this.props.submitProject(this.state.title, this.state.email, this.state.items);
+        this.props.submitProject({title: this.state.title, email: this.state.email, items: this.state.items});
     }
 
     setItems (items) {
@@ -129,4 +129,4 @@ class Home extends React.Component {
     }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(CreateProjectPage);

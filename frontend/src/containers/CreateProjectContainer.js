@@ -1,11 +1,11 @@
 import React from 'react';
-import Home from '../components/Home';
+import CreateProjectPage from '../components/CreateProjectPage';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as boxActionCreators from '../redux/project';
 import PropTypes from 'prop-types';
 
-class HomeContainer extends React.Component {
+class CreateProjectContainer extends React.Component {
 
     static propTypes = {
         router: PropTypes.object.isRequired,
@@ -16,13 +16,22 @@ class HomeContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    componentDidMount () {
+    constructor(props) {
+        super(props);
+        this.submitProjectWrapper = this.submitProjectWrapper.bind(this);
+    }
+
+    submitProjectWrapper(project) {
+        // // TODO react-router-redux.push() method, instead of dependency injection
+        const changeRoute = (url) => {this.props.router.replace(url)};
+        this.props.submitProject(project, changeRoute);
     }
 
     render () {
         return (
-
-            <Home submitProject={this.props.submitProject} />
+            <div>
+                <CreateProjectPage submitProject={this.submitProjectWrapper} />
+            </div>
         );
     }
 }
@@ -38,5 +47,5 @@ function mapDispatchToProps (dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(HomeContainer);
+)(CreateProjectContainer);
 

@@ -38,21 +38,24 @@ class ItemList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newItem: '',
+            newItemText: '',
         };
         this.add = this.add.bind(this);
         this.remove = this.remove.bind(this);
         this.update = this.update.bind(this);
         this.newItemHandleKeyPress = this.newItemHandleKeyPress.bind(this);
+        this.generateNewID = this.generateNewID.bind(this);
     }
 
     add () {
-        if (this.state.newItem.length == 0) {
+        if (this.state.newItemText.length === 0) {
             return;
         }
-        const items = [...this.props.items, this.state.newItem];
+
+        const newItem = {id: this.generateNewID(this.props.items), text: this.state.newItemText};
+        const items = [...this.props.items, newItem];
         this.props.onChangeItems(items);
-        this.setState({newItem:''});
+        this.setState({newItemID:'', newItemText:''});
     }
 
     remove (index) {
@@ -62,7 +65,10 @@ class ItemList extends React.Component {
 
     update (value, index) {
         const items = this.props.items.map( (item, idx) => {
-           return idx === index ? value : item;
+            if (idx === index) {
+                item = {id: item.id, text: value};
+            }
+            return item;
         });
         this.props.onChangeItems(items);
     }
@@ -73,6 +79,18 @@ class ItemList extends React.Component {
         }
     }
 
+    generateNewID(items) {
+        for (let i=0; i<100; i++) {
+            var newID = Math.random().toString(16).slice(-4);
+            // eslint-disable-next-line
+            var found = items.find((item) => {return item.id === newID;});
+            if (!found) {
+                return newID;
+            }
+        }
+        throw Error("a unique ID could not be generated");
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -81,10 +99,10 @@ class ItemList extends React.Component {
                     {this.props.items.map( (item, index) => {
                         return <li key={index} className={classes.listItem}>
                             <TextField
-                                id="newItem"
+                                id={item.id}
                                 label=""
                                 className={classes.textField}
-                                value={item}
+                                value={item.text}
                                 onChange={(e) => this.update(e.target.value, index)}
                                 margin="normal"
                                 type="text"
@@ -97,8 +115,8 @@ class ItemList extends React.Component {
                             id="newItem"
                             label=""
                             className={classes.textField}
-                            value={this.state.newItem}
-                            onChange={(e) => this.setState({newItem: e.target.value})}
+                            value={this.state.newItemText}
+                            onChange={(e) => this.setState({newItemText: e.target.value})}
                             onKeyPress={this.newItemHandleKeyPress}
                             margin="normal"
                             type="text"

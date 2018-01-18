@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import AddIcon from 'material-ui-icons/Add';
-import Button from 'material-ui/Button';
 
 
 const styles = theme => ({
@@ -62,7 +61,6 @@ class BatchItems extends React.Component {
             <div className={classes.row}>
                 <TextField
                     id="multiline-static"
-                    // label="Füge Textzeilen als Items hinzu"
                     multiline
                     rows="10"
                     value={this.state.batchContent}
