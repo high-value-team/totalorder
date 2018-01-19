@@ -8,6 +8,6 @@
         }
         
         public string Title;
-        public ItemsResponseDto.ItemDto[] ItemDtos;
+        public ItemsResponseDto.ItemDto[] Items;
     }
 }

@@ -1,7 +1,7 @@
 {
 	"_type": "export",
 	"__export_format": 3,
-	"__export_date": "2018-01-17T22:54:55.048Z",
+	"__export_date": "2018-01-18T21:10:59.810Z",
 	"__export_source": "insomnia.desktop.app:v5.12.4",
 	"resources": [
 		{
@@ -58,7 +58,7 @@
 			"authentication": {},
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"id\":\"abc\",\n\t\"title\": \"Some project\",\n\t\"productowneremail\": \"balin@ralfw.de\",\n\t\"items\": [\n\t\t\"a\",\n\t\t\"b\",\n\t\t\"c\"\n\t]\n}"
+				"text": "{\n\t\"id\":\"abc\",\n\t\"title\": \"Some project\",\n\t\"productowneremail\": \"dwalin@ralfw.de\",\n\t\"items\": [\n\t\t\"a\",\n\t\t\"b\",\n\t\t\"c\"\n\t]\n}"
 			},
 			"created": 1513774081852,
 			"description": "",
@@ -71,7 +71,7 @@
 			],
 			"metaSortKey": -1513774081852,
 			"method": "POST",
-			"modified": 1516229344987,
+			"modified": 1516229922358,
 			"name": "create project",
 			"parameters": [],
 			"parentId": "wrk_151c5f9bf9ca4e52b0447a50c2cfd63b",
@@ -178,6 +178,42 @@
 			"settingSendCookies": true,
 			"settingStoreCookies": true,
 			"url": "{{ domain  }}/api/v1/projects/abc/submissions",
+			"_type": "request"
+		},
+		{
+			"_id": "req_345db87310d54831b020a025f185c850",
+			"authentication": {},
+			"body": {},
+			"created": 1516309711408,
+			"description": "",
+			"headers": [
+				{
+					"id": "pair_9b1726d4e72c475696e603905acb9849",
+					"name": "Access-Control-Request-Method",
+					"value": "GET"
+				},
+				{
+					"id": "pair_4e388254656f43b8989280686d7ea3b3",
+					"name": "Access-Control-Request-Headers",
+					"value": "X-PINGOTHER, Content-Type"
+				},
+				{
+					"id": "pair_34ffe74444704ceb8f9678ea37697dca",
+					"name": "",
+					"value": ""
+				}
+			],
+			"metaSortKey": -1512134030871.5,
+			"method": "OPTIONS",
+			"modified": 1516309829755,
+			"name": "CORS preflight",
+			"parameters": [],
+			"parentId": "wrk_151c5f9bf9ca4e52b0447a50c2cfd63b",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "{{ domain  }}/api/v1/version",
 			"_type": "request"
 		},
 		{

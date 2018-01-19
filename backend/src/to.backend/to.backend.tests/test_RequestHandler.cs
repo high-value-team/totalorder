@@ -42,12 +42,12 @@ namespace to.backend.tests
             // retrieve items for ordering
             var items = sut.Retrieve_project_items(prjId);
             Assert.AreEqual("P1", items.Title);
-            Assert.AreEqual("0", items.ItemDtos[0].Id);
-            Assert.AreEqual("a", items.ItemDtos[0].Text);
-            Assert.AreEqual("1", items.ItemDtos[1].Id);
-            Assert.AreEqual("b", items.ItemDtos[1].Text);
-            Assert.AreEqual("2", items.ItemDtos[2].Id);
-            Assert.AreEqual("c", items.ItemDtos[2].Text);
+            Assert.AreEqual("0", items.Items[0].Id);
+            Assert.AreEqual("a", items.Items[0].Text);
+            Assert.AreEqual("1", items.Items[1].Id);
+            Assert.AreEqual("b", items.Items[1].Text);
+            Assert.AreEqual("2", items.Items[2].Id);
+            Assert.AreEqual("c", items.Items[2].Text);
             
             // submit first total order
             sut.Submit_ordered_items(prjId, new TotalOrderSubmissionDto {

@@ -54,7 +54,7 @@ namespace to.backend.service
             var prj = _repo.Load(projectId);
             return new ItemsResponseDto {
                 Title = prj.Title,
-                ItemDtos = Map(prj.Items).ToArray()
+                Items = Map(prj.Items).ToArray()
             };
 
             IEnumerable<ItemsResponseDto.ItemDto> Map(IEnumerable<string> items)
