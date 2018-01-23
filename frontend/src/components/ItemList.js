@@ -9,10 +9,6 @@ import AddIcon from 'material-ui-icons/Add';
 const styles = theme => ({
     container: {
     },
-    root: {
-        fontFamily: 'Roboto, sans-serif',
-        width: '100%',
-    },
     orderedList: {
         listStyleType: 'none',
         padding: '0px',
@@ -23,7 +19,21 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: '300px'
+        width: '250px'
+    },
+
+    row: {
+        display: 'flex',
+    },
+    col: {
+    },
+    buttonWrap: {
+        position: 'relative',
+    },
+    button: {
+        position: 'absolute',
+        bottom: '15px',
+        left: '0',
     },
 });
 
@@ -38,7 +48,8 @@ class ItemList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newItemText: '',
+            batchContent: '',
+            lastKeyPressEnter: false,
         };
         this.add = this.add.bind(this);
         this.remove = this.remove.bind(this);
@@ -47,15 +58,25 @@ class ItemList extends React.Component {
         this.generateNewID = this.generateNewID.bind(this);
     }
 
+    randomID() {
+        return Math.random().toString(16).slice(-4);
+    }
+
     add () {
-        if (this.state.newItemText.length === 0) {
+        if (this.state.batchContent.length === 0) {
             return;
         }
 
-        const newItem = {id: this.generateNewID(this.props.items), text: this.state.newItemText};
-        const items = [...this.props.items, newItem];
+        var newItems = this.state.batchContent.split('\n').filter(item => item.length > 0);
+        newItems = newItems.map((item) => ({
+                id: this.randomID(),
+                text: item,
+            }
+        ));
+
+        const items = [...this.props.items, ...newItems];
         this.props.onChangeItems(items);
-        this.setState({newItemID:'', newItemText:''});
+        this.setState({batchContent:''});
     }
 
     remove (index) {
@@ -74,8 +95,14 @@ class ItemList extends React.Component {
     }
 
     newItemHandleKeyPress (e) {
-        if (e.key === 'Enter') {
+        console.log(`lastKeyPressEnter:${this.state.lastKeyPressEnter}`);
+        if (this.state.lastKeyPressEnter && e.key === 'Enter') {
             this.add();
+        }
+        if (e.key === 'Enter') {
+            this.setState({lastKeyPressEnter: true});
+        } else {
+            this.setState({lastKeyPressEnter: false});
         }
     }
 
@@ -94,37 +121,40 @@ class ItemList extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
-                <ol className={classes.orderedList}>
-                    {this.props.items.map( (item, index) => {
-                        return <li key={index} className={classes.listItem}>
-                            <TextField
-                                id={item.id}
-                                label=""
-                                className={classes.textField}
-                                value={item.text}
-                                onChange={(e) => this.update(e.target.value, index)}
-                                margin="normal"
-                                type="text"
-                            />
-                            <RemoveIcon onClick={() => this.remove(index)}/>
-                        </li>
-                    })}
-                    <li key={"newItem"}>
+            <ol className={classes.orderedList}>
+                {this.props.items.map( (item, index) => {
+                    return <li key={index} className={classes.listItem}>
                         <TextField
-                            id="newItem"
+                            id={item.id}
                             label=""
                             className={classes.textField}
-                            value={this.state.newItemText}
-                            onChange={(e) => this.setState({newItemText: e.target.value})}
-                            onKeyPress={this.newItemHandleKeyPress}
+                            value={item.text}
+                            onChange={(e) => this.update(e.target.value, index)}
                             margin="normal"
                             type="text"
                         />
-                        <AddIcon onClick={() => this.add()}/>
+                        <RemoveIcon onClick={() => this.remove(index)}/>
                     </li>
-                </ol>
-            </div>
+                })}
+                <li key={"newItem"}>
+                    <div className={classes.row}>
+                        <TextField
+                            id="multiline-static"
+                            multiline
+                            value={this.state.batchContent}
+                            className={[classes.textField, classes.col].join(' ')}
+                            margin="normal"
+                            fullWidth
+                            maxRows="99"
+                            onChange={(e)=> this.setState({batchContent: e.target.value})}
+                            onKeyPress={this.newItemHandleKeyPress}
+                        />
+                        <div className={[classes.buttonWrap, classes.col].join(' ')}>
+                            <AddIcon className={classes.button} onClick={this.add}/>
+                        </div>
+                    </div>
+                </li>
+            </ol>
         );
     }
 }

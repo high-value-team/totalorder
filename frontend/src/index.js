@@ -8,6 +8,7 @@ import { browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Theme from './Theme'
 import getRoutes from './Routes';
+import Reboot from 'material-ui/Reboot';
 
 import project from './redux/project'; // TODO use index.js to include all reducers in one place
 
@@ -21,7 +22,9 @@ const history = syncHistoryWithStore(browserHistory, store);
 const element = (
     <Provider store={store}>
         <MuiThemeProvider theme={Theme}>
-            {getRoutes(history)}
+            <Reboot>
+                {getRoutes(history)}
+            </Reboot>
         </MuiThemeProvider>
     </Provider>
 );

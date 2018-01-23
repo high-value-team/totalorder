@@ -9,39 +9,41 @@ import Paper from 'material-ui/Paper';
 import Validator from 'validator';
 
 import ItemList from './ItemList';
-import BatchItems from './BatchItems';
 
 const styles = theme => ({
     root: {
-        fontFamily: 'Roboto, sans-serif',
-        width: '100%',
+        // fontFamily: 'Roboto, sans-serif',
+        // width: '100%',
     },
     paper: {
-        padding: '30px',
+        paddingTop: '10px',
+        paddingLeft: '30px',
+        paddingBottom: '30px',
     },
     container: {
     },
     title: {
-        margin: theme.spacing.unit,
+        // margin: theme.spacing.unit,
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: '300px'
+        // marginLeft: theme.spacing.unit,
+        // marginRight: theme.spacing.unit,
+        width: '250px'
     },
     textFieldBig: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: '90%',
+        // marginLeft: theme.spacing.unit,
+        // marginRight: theme.spacing.unit,
+        // width: '90%',
     },
     button: {
-        marginLeft: theme.spacing.unit,
-        marginTop: theme.spacing.unit * 3,
+        marginTop: '50px',
+        // marginLeft: theme.spacing.unit,
+        // marginTop: theme.spacing.unit * 3,
     },
     headline: {
-        margin: '8px',
-        marginTop: '50px',
-        color: '#0000008a',
+        // margin: '8px',
+        // marginTop: '50px',
+        // color: '#0000008a',
     },
 });
 
@@ -139,7 +141,7 @@ class CreateProjectPage extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={4}>
-                    <Typography className={classes.title} type="display2" gutterBottom={true}>Create Project</Typography>
+                    {/*<Typography className={classes.title} type="display2" gutterBottom={true}>Create Project</Typography>*/}
                     <div>
                         <TextField
                             id="title"
@@ -165,16 +167,16 @@ class CreateProjectPage extends React.Component {
                         {state.emailError ? <div id="email-error">{state.emailError}</div> : null}
                     </div>
 
-                    <Typography type="headline" className={classes.headline}>Items to order:</Typography>
+                    <Typography type="title" color="inherit" style={{fontWeight: 'bold', marginTop:'60px', color:'#0000008a'}}>
+                        items to order
+                    </Typography>
+
                     <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
                     {state.itemsError ? <div id="items-error">{state.itemsError}</div> : null}
 
-                    <Typography type="headline" className={classes.headline}>Add batch of Items:</Typography>
-                    <BatchItems onNewBatch={(items) => this.appendItems(items)}/>
-
                     <div>
                         <Button raised={true} color="primary" className={classes.button} onClick={this.onSubmit}>
-                            Create Project
+                            Submit
                         </Button>
                     </div>
 

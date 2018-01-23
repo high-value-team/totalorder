@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as boxActionCreators from '../redux/project';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 
 class CreateProjectContainer extends React.Component {
 
@@ -19,6 +20,9 @@ class CreateProjectContainer extends React.Component {
     render () {
         return (
             <div>
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'25px', color:'#0000008a'}}>
+                    Create Project
+                </Typography>
                 <CreateProjectPage submitProject={this.props.submitProject} />
             </div>
         );
