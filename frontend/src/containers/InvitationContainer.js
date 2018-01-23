@@ -35,7 +35,7 @@ class InvitationContainer extends React.Component {
     static propTypes = {
         router: PropTypes.object.isRequired,
         submitProject: PropTypes.func.isRequired,
-        loadSummary: PropTypes.func.isRequired,
+        fetchAndHandleSummary: PropTypes.func.isRequired,
         projectID: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         itemCount: PropTypes.number.isRequired,

@@ -73,7 +73,7 @@ class CreateProjectPage extends React.Component {
 
     onSubmit () {
         if (this.validate()) {
-            this.props.submitProject(this.state.title, this.state.email, this.state.items);
+            this.props.submitProject({title: this.state.title, email: this.state.email, items: this.state.items});
         }
     }
 

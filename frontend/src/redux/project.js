@@ -1,4 +1,5 @@
 import 'react-redux'
+import { browserHistory } from 'react-router'
 import * as api from '../Api'
 
 //
@@ -53,12 +54,13 @@ function fetchingSummaryError(error) {
 // action creators
 //
 
-export function submitProject(project, changeRoute) {
+export function submitProject(project) {
     return function (dispatch) {
+        console.log("items:"+ project.items);
         api.createProject(project.title, project.email, project.items)
             .then((projectID) => {
                 dispatch(newID(projectID));
-                changeRoute(`/${projectID}/invitation`);
+                browserHistory.push(`/${projectID}/invitation`);
                 console.log('Success in submitProject, projectID:', projectID);
             })
             .catch((err) => {
@@ -67,11 +69,11 @@ export function submitProject(project, changeRoute) {
     };
 }
 
-export function submitOrder(projectID, stakeholderemail, items, changeRoute) {
+export function submitOrder(projectID, stakeholderemail, items) {
     return function(dispatch) {
         api.createOrder(projectID, stakeholderemail, items)
             .then(() => {
-                changeRoute(`/${projectID}/thank-you`);
+                browserHistory.push(`/${projectID}/thank-you`);
                 console.log('Success in createOrder');
             })
             .catch((err) => {
@@ -129,6 +131,7 @@ export function loadVersion() {
 // https://github.com/scotthovestadt/schema-object
 // https://github.com/molnarg/js-schema
 // https://github.com/gcanti/tcomb
+// https://flow.org - static type checker
 const initialState = {
     projectID: '',
     title: '',

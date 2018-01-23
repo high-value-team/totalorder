@@ -16,21 +16,10 @@ class CreateProjectContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        this.submitProjectWrapper = this.submitProjectWrapper.bind(this);
-    }
-
-    submitProjectWrapper(project) {
-        // // TODO react-router-redux.push() method, instead of dependency injection
-        const changeRoute = (url) => {this.props.router.replace(url)};
-        this.props.submitProject(project, changeRoute);
-    }
-
     render () {
         return (
             <div>
-                <CreateProjectPage submitProject={this.submitProjectWrapper} />
+                <CreateProjectPage submitProject={this.props.submitProject} />
             </div>
         );
     }
