@@ -1,46 +1,22 @@
 import 'react-redux'
+import * as api from '../Api'
 
 //
-// constants
+// actions constants
 //
 
 const CREATE_PROJECT = 'CREATE_PROJECT';
 const CHANGING_ORDER = 'CHANGING_ORDER';
 const NEW_ID = 'NEW_ID';
-const LOAD_SUMMARY = 'LOAD_SUMMARY';
 const LOAD_ITEMS = 'LOAD_ITEMS';
 const LOAD_VERSION = 'LOAD_VERSION';
+const FETCHING_SUMMARY_SUCCESS = 'FETCHING_SUMMARY_SUCCESS';
+const FETCHING_SUMMARY_ERROR = 'FETCHING_SUMMARY_ERROR';
+
 
 //
 // actions
 //
-
-export function submitProject(project, changeRoute) {
-    return function (dispatch) {
-        createProject(project.title, project.email, project.items)
-            .then((projectID) => {
-                dispatch(newID(projectID));
-                changeRoute(`/${projectID}/invitation`);
-                console.log('Success in submitProject, projectID:', projectID);
-            })
-            .catch((err) => {
-                console.warn('Error in submitProject', err);
-            });
-    };
-}
-
-export function submitOrder(projectID, stakeholderemail, items, changeRoute) {
-    return function(dispatch) {
-        createOrder(projectID, stakeholderemail, items)
-            .then(() => {
-                changeRoute(`/${projectID}/thank-you`);
-                console.log('Success in createOrder');
-            })
-            .catch((err) => {
-                console.warn('Error in createOrder', err);
-            });
-    }
-}
 
 function newID(projectID) {
     return {
@@ -56,27 +32,66 @@ export function orderChanged(items) {
     }
 }
 
-export function loadSummary(projectID) {
-    return function(dispatch) {
-        getSummary(projectID)
-            .then((body) => {
-                dispatch({
-                    type: LOAD_SUMMARY,
-                    projectID: projectID,
-                    title: body.title,
-                    numberOfSubmissions: body.numberOfSubmissions,
-                    items: body.items.map((item, index) => ({id: index, text: item})),
-                });
+function fetchingSummarySuccess(summary, projectID) {
+    return {
+        type: FETCHING_SUMMARY_SUCCESS,
+        projectID: projectID,
+        title: summary.title,
+        numberOfSubmissions: summary.numberOfSubmissions,
+        items: summary.items,
+    }
+}
+
+function fetchingSummaryError(error) {
+    return {
+        type: FETCHING_SUMMARY_ERROR,
+        error: error,
+    }
+}
+
+//
+// action creators
+//
+
+export function submitProject(project, changeRoute) {
+    return function (dispatch) {
+        api.createProject(project.title, project.email, project.items)
+            .then((projectID) => {
+                dispatch(newID(projectID));
+                changeRoute(`/${projectID}/invitation`);
+                console.log('Success in submitProject, projectID:', projectID);
             })
             .catch((err) => {
-                console.warn('Error in loadSummary', err);
+                console.warn('Error in submitProject', err);
             });
+    };
+}
+
+export function submitOrder(projectID, stakeholderemail, items, changeRoute) {
+    return function(dispatch) {
+        api.createOrder(projectID, stakeholderemail, items)
+            .then(() => {
+                changeRoute(`/${projectID}/thank-you`);
+                console.log('Success in createOrder');
+            })
+            .catch((err) => {
+                console.warn('Error in createOrder', err);
+            });
+    }
+}
+
+
+export function fetchAndHandleSummary(projectID) {
+    return function (dispatch) {
+        api.fetchSummary(projectID)
+            .then((summary) => dispatch(fetchingSummarySuccess(summary, projectID)))
+            .catch((error) => dispatch(fetchingSummaryError(error)));
     }
 }
 
 export function loadItems(projectID) {
     return function(dispatch) {
-        getItems(projectID)
+        api.getItems(projectID)
             .then((body) => {
                 dispatch({
                     type: LOAD_ITEMS,
@@ -93,7 +108,7 @@ export function loadItems(projectID) {
 
 export function loadVersion() {
     return function(dispatch) {
-        getVersion()
+        api.getVersion()
             .then((version) => {
                 dispatch({
                     type: LOAD_VERSION,
@@ -105,19 +120,24 @@ export function loadVersion() {
             });
     }
 }
+
 //
 // reducers
 //
 
+// TODO schema definition?
+// https://github.com/scotthovestadt/schema-object
+// https://github.com/molnarg/js-schema
+// https://github.com/gcanti/tcomb
 const initialState = {
     projectID: '',
-    title: 'demoTitle',
-    email: 'demoEmail',
+    title: '',
+    email: '',
     items: [
-        {id: 'a', text: 'item 1'},
-        {id: 'b', text: 'item 2'},
-        {id: 'd', text: 'item 4'},
-        {id: 'c', text: 'item 3'},
+        // {id: 'a', text: 'item 1'},
+        // {id: 'b', text: 'item 2'},
+        // {id: 'd', text: 'item 4'},
+        // {id: 'c', text: 'item 3'},
     ],
     numberOfSubmissions: 0,
     version: '',
@@ -141,7 +161,7 @@ export default function project (state = initialState, action) {
                 ...state,
                 projectID: action.projectID,
             };
-        case LOAD_SUMMARY:
+        case FETCHING_SUMMARY_SUCCESS:
             return {
                 ...state,
                 projectID: action.projectID,
@@ -165,143 +185,3 @@ export default function project (state = initialState, action) {
             return state;
     }
 }
-
-//
-// helpers
-//
-
-// const baseURL = 'https://us-central1-totalorder-4bafb.cloudfunctions.net/api';
-const baseURL = 'https://totalorder-backend.cloud.dropstack.run';
-
-function createProject(title, email, items) {
-    const itemList = items.map((item) => item.text);
-    const body = JSON.stringify({
-        title: title,
-        productowneremail: email,
-        items: itemList,
-    });
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Content-Length', body.length);
-
-    return new Promise((resolve, reject) => {
-        // fetch('https://totalorder-backend.cloud.dropstack.run/api/v1/projects', {
-        // fetch('/api/v1/projects', {
-        fetch(`${baseURL}/api/v1/projects`, {
-            // mode: 'no-cors',
-            method: 'POST',
-            headers,
-            body,
-        }).then(resp => {
-            if (resp.ok) {
-                resp.text().then(projectID => {
-                    resolve(projectID);
-                });
-            } else {
-                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${resp}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-function createOrder(projectID, stakeholderemail, items) {
-    const itemids = items.map((item) => item.id);
-    const body = JSON.stringify({
-        stakeholderemail: stakeholderemail,
-        itemids: itemids,
-    });
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Content-Length', body.length);
-
-    return new Promise((resolve, reject) => {
-        // fetch(`/api/v1/projects/${projectID}/submissions`, {
-        fetch(`${baseURL}/api/v1/projects/${projectID}/submissions`, {
-            // mode: 'no-cors',
-            method: 'POST',
-            headers,
-            body,
-        }).then(resp => {
-            if (resp.ok) {
-                resp.text().then(projectID => {
-                    resolve(projectID);
-                });
-            } else {
-                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-function getSummary(projectID) {
-    return new Promise((resolve, reject) => {
-        // fetch(`/api/v1/projects/${projectID}/summary`, {
-        fetch(`${baseURL}/api/v1/projects/${projectID}/summary`, {
-            // mode: 'no-cors',
-            method: 'GET',
-        }).then(resp => {
-            if (resp.ok) {
-                resp.json().then(body => {
-                    resolve(body);
-                });
-            } else {
-                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-function getItems(projectID) {
-    return new Promise((resolve, reject) => {
-        // fetch(`/api/v1/projects/${projectID}/items`, {
-        fetch(`${baseURL}/api/v1/projects/${projectID}/items`, {
-            // mode: 'no-cors',
-            method: 'GET',
-        }).then(resp => {
-            if (resp.ok) {
-                resp.json().then(body => {
-                    resolve(body);
-                });
-            } else {
-                console.warn(`createProject():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-function getVersion() {
-    return new Promise((resolve, reject) => {
-        fetch(`${baseURL}/api/v1/version`, {
-            // mode: 'no-cors',
-            method: 'GET',
-        }).then(resp => {
-            // console.log(`resp:${JSON.stringify(, null, 2)}`);
-            // console.log(`resp.ok:${resp.ok}`);
-            if (resp.ok) {
-                resp.text().then(version => {
-                    console.log(`version:${version}`);
-                    resolve(version);
-                });
-            } else {
-                console.warn(`getVersion():${JSON.stringify(resp, null, 2)}`);
-                reject(`API endpoint failed: resp: ${JSON.stringify(resp, null, 2)}`);
-            }
-        }).catch(err => {
-            reject(err);
-        });
-    });
-}
-
-

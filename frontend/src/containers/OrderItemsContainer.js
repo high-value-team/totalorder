@@ -55,12 +55,11 @@ class OrderItemsContainer extends React.Component {
 }
 
 function mapStateToProps ({project}, props) {
-    const {title, email, items} = project;
     return {
         projectID: props.router.params.projectID,
-        title,
-        email,
-        items,
+        title: project.title,
+        email: project.email,
+        items: project.items ? project.items : [],
     };
 }
 

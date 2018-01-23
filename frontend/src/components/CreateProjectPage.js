@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import Validator from 'validator';
 
 import ItemList from './ItemList';
 import BatchItems from './BatchItems';
@@ -55,18 +56,69 @@ class CreateProjectPage extends React.Component {
         super(props);
         this.state = {
             title: '',
+            titleError: null,
             email: '',
+            emailError: null,
             items: [],
+            itemsError: null,
             newItemElement: '',
             itemBlockElement: '',
         };
-        this.createProject = this.createProject.bind(this);
         this.setItems = this.setItems.bind(this);
         this.appendItems = this.appendItems.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.validate = this.validate.bind(this);
+        this.onTextFieldChange = this.onTextFieldChange.bind(this);
     }
 
-    createProject () {
-        this.props.submitProject({title: this.state.title, email: this.state.email, items: this.state.items});
+    onSubmit () {
+        if (this.validate()) {
+            this.props.submitProject(this.state.title, this.state.email, this.state.items);
+        }
+    }
+
+    validate () {
+        let isValid = true;
+
+        // title
+        if (this.state.title.length === 0 ) {
+            this.setState({titleError : 'invalid title'});
+            isValid = false;
+        } else {
+            this.setState({titleError : null});
+        }
+
+        // email
+        if (!Validator.isEmail(this.state.email)) {
+            this.setState({emailError : 'invalid email'});
+            isValid = false;
+        } else {
+            this.setState({emailError : null});
+        }
+
+        // items
+        if (this.state.items.length === 0 ) {
+            this.setState({itemsError : 'invalid items'});
+            isValid = false;
+        } else {
+            this.setState({itemsError : null});
+        }
+
+        return isValid;
+    }
+
+    onTextFieldChange (event) {
+        // console.log(event.target.id);
+        switch (event.target.id) {
+            case 'title':
+                this.setState({title : event.target.value});
+                break;
+            case 'email':
+                this.setState({email : event.target.value});
+                break;
+            default:
+                break;
+        }
     }
 
     setItems (items) {
@@ -94,10 +146,11 @@ class CreateProjectPage extends React.Component {
                             label="Project Title"
                             className={classes.textField}
                             value={state.title}
-                            onChange={(e) => this.setState({title: e.target.value})}
+                            onChange={this.onTextFieldChange}
                             margin="normal"
                             type="title"
                         />
+                        {state.titleError ? <div id="title-error">{state.titleError}</div> : null}
                     </div>
                     <div>
                         <TextField
@@ -105,20 +158,22 @@ class CreateProjectPage extends React.Component {
                             label="Your Email"
                             className={classes.textField}
                             value={state.email}
-                            onChange={(e) => this.setState({email: e.target.value})}
+                            onChange={this.onTextFieldChange}
                             margin="normal"
                             type="email"
                         />
+                        {state.emailError ? <div id="email-error">{state.emailError}</div> : null}
                     </div>
 
                     <Typography type="headline" className={classes.headline}>Items to order:</Typography>
                     <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
+                    {state.itemsError ? <div id="items-error">{state.itemsError}</div> : null}
 
                     <Typography type="headline" className={classes.headline}>Add batch of Items:</Typography>
                     <BatchItems onNewBatch={(items) => this.appendItems(items)}/>
 
                     <div>
-                        <Button raised={true} color="primary" className={classes.button} onClick={this.createProject}>
+                        <Button raised={true} color="primary" className={classes.button} onClick={this.onSubmit}>
                             Create Project
                         </Button>
                     </div>
