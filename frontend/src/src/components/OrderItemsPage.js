@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 
@@ -20,11 +19,13 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     paper: {
-        padding: '30px',
+        paddingTop: '10px',
+        paddingLeft: '30px',
+        paddingBottom: '30px',
     },
     button: {
-        marginLeft: theme.spacing.unit,
-        marginTop: theme.spacing.unit * 3,
+        marginLeft: `0px`,
+        marginTop: theme.spacing.unit * 5,
     },
 });
 
@@ -63,9 +64,6 @@ class OrderItemsPage extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={4}>
-                    <Typography type="display2" className={classes.title} gutterBottom={true}>Total Order - Project {this.props.title}</Typography>
-
-                    <Typography type="headline" style={{margin: '8px', marginTop: '50px', color: '#0000008a'}}>Bring Items into total order:</Typography>
                     <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
 
                     <FormControl error aria-describedby="name-error-text">

@@ -44,14 +44,28 @@ class MainContainer extends React.Component {
         console.log(`API_ROOT:${API_ROOT}`);
     }
 
+    pad(n) {
+        return String("00" + n).slice(-2);
+    }
+
+    formatVersion(version) {
+        if (!version) {
+            return 'Backend not available!';
+        }
+        const v = JSON.parse(version);
+        const date = new Date(v.timestamp);
+        return `version: ${v.number} time: ${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`;
+    }
+
     render () {
         const { classes } = this.props;
+        const title = `TotalOrder ${this.props.title.length === 0 ? '' : ' - ' + this.props.title}`;
         return (
             <div className={classes.container}>
-                <Navigation title={'TotalOrder'}/>
+                <Navigation title={title}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
-                    <p className="App-intro">{this.props.version}</p>
+                    <p className="App-intro">{this.formatVersion(this.props.version)}</p>
                 </div>
             </div>
         );
@@ -59,7 +73,7 @@ class MainContainer extends React.Component {
 }
 
 function mapStateToProps (state) {
-    return {version: state.project.version};
+    return {version: state.project.version, title: state.project.title};
 }
 
 function mapDispatchToProps (dispatch) {

@@ -2,6 +2,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 
 import OrderItemsPage from '../components/OrderItemsPage';
 import * as projectActionCreators from '../redux/project';
@@ -28,7 +29,12 @@ class OrderItemsContainer extends React.Component {
 
     render () {
         return (
-            <OrderItemsPage {...this.props} />
+            <div>
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'15px', marginLeft: '20px', color:'#0000008a'}}>
+                    Bring Items Into Total Order
+                </Typography>
+                <OrderItemsPage {...this.props} />
+            </div>
         );
     }
 }

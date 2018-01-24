@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from "material-ui/styles/index";
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
     root: {
@@ -21,11 +22,12 @@ const styles = theme => ({
         margin: '0px auto',
     },
     paper: {
-        padding: '30px',
+        paddingTop: '10px',
+        paddingLeft: '30px',
+        paddingBottom: '30px',
     },
     headline: {
-        margin: '8px',
-        marginTop: '50px',
+
         color: '#0000008a',
     },
 });
@@ -64,11 +66,20 @@ class InvitationContainer extends React.Component {
 
         return (
             <div className={classes.root}>
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'15px', marginLeft: '20px', color:'#0000008a'}}>
+                    Project Created
+                </Typography>
                 <Paper className={classes.paper} elevation={4}>
-                    <Typography type="headline" className={classes.headline}>Total Order: Project {this.props.title}</Typography>
-                    <Typography type="headline" className={classes.headline}>{this.props.itemCount} Items</Typography>
-                    <Typography type="headline" className={classes.headline}>Invitation Link: <a href={this.state.invitationLink}>{this.state.invitationLink}</a></Typography>
-                    <Typography type="headline" className={classes.headline}>Admin Link: <a href={this.state.adminLink}>{this.state.adminLink}</a></Typography>
+                    <Grid container spacing={0}>
+                        <Grid item xs={0}>
+                            <Typography type="title" style={{color: '#0000008a', marginTop: '30px', marginRight: '10px'}}className={classes.headline}>Invitation Link:</Typography>
+                            <Typography type="title" style={{color: '#0000008a', marginTop: '10px', marginBottom: '20px', marginRight: '10px'}}>Admin Link:</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Typography type="title" style={{color: '#0000008a', marginTop: '30px'}} className={classes.headline}><a href={this.state.invitationLink}>{this.state.invitationLink}</a></Typography>
+                            <Typography type="title" style={{color: '#0000008a', marginTop: '10px', marginBottom: '20px'}}><a href={this.state.adminLink}>{this.state.adminLink}</a></Typography>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </div>
         );
@@ -76,7 +87,6 @@ class InvitationContainer extends React.Component {
 }
 
 function mapStateToProps (state, props) {
-    // console.log(`state.project.items.length:${state.project.items.length}`);
     return {
         projectID: props.router.params.projectID,
         title: state.project.title,

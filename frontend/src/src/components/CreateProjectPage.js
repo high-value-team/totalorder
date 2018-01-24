@@ -183,7 +183,7 @@ class CreateProjectPage extends React.Component {
                         </FormControl>
                     </div>
 
-                    <Typography type="title" color="inherit" style={{fontWeight: 'bold', marginTop:'60px', color:'#0000008a'}}>
+                    <Typography type="title" color="inherit" style={{fontWeight: 'bold', marginTop:'40px', color:'#0000008a'}}>
                         items to order
                     </Typography>
 
