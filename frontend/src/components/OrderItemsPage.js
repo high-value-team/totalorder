@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import Validator from 'validator';
 
 import OrderItems from './OrderItems'
 
@@ -39,13 +40,18 @@ class OrderItemsPage extends React.Component {
         super(props);
         this.state = {
             submitEmail: '',
+            submitEmailError: '',
         };
         console.log("items:" + props.items);
-        this.submit = this.submit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    submit() {
-        console.log("submitOrder:" + this.props.items);
+    onSubmit() {
+        if (!Validator.isEmail(this.state.submitEmail)) {
+            this.setState({submitEmailError: 'invalid email'});
+            return;
+        }
+
         this.props.submitOrder(this.props.projectID, this.state.submitEmail, this.props.items);
     }
 
@@ -65,13 +71,14 @@ class OrderItemsPage extends React.Component {
                             margin="normal"
                             type="title"
                         />
+                        {this.state.submitEmailError ? <div id="submit-email-error">{this.state.submitEmailError}</div> : null}
                     </div>
 
                     <Typography type="headline" style={{margin: '8px', marginTop: '50px', color: '#0000008a'}}>Bring Items into total order:</Typography>
                     <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
 
                     <div>
-                        <Button raised={true} color="primary" className={classes.button} onClick={this.submit}>
+                        <Button raised={true} color="primary" className={classes.button} onClick={this.onSubmit}>
                             Submit
                         </Button>
                     </div>

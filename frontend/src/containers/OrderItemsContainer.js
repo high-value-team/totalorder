@@ -22,45 +22,23 @@ class OrderItemsContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        this.submitOrderWrapper = this.submitOrderWrapper.bind(this);
-    }
-
     componentDidMount() {
         this.props.loadItems(this.props.projectID)
     }
 
-    submitOrderWrapper(projectID, stakeholderemail, items) {
-        // // TODO react-router-redux.push() method, instead of dependency injection
-        const changeRoute = (url) => {this.props.router.replace(url)};
-        this.props.submitOrder(projectID, stakeholderemail, items, changeRoute);
-    }
-
     render () {
-        // const project = this.props.project;
-        // const project = JSON.parse(JSON.stringify(this.props.project)); // TODO workaround
-        // console.log(`props:${JSON.stringify(project, null, 2)}`);
         return (
-            <OrderItemsPage
-                projectID={this.props.projectID}
-                title={this.props.title}
-                email={this.props.email}
-                items={this.props.items}
-                submitOrder={this.submitOrderWrapper}
-                orderChanged={this.props.orderChanged}
-            />
+            <OrderItemsPage {...this.props} />
         );
     }
 }
 
 function mapStateToProps ({project}, props) {
-    const {title, email, items} = project;
     return {
         projectID: props.router.params.projectID,
-        title,
-        email,
-        items,
+        title: project.title,
+        email: project.email,
+        items: project.items ? project.items : [],
     };
 }
 

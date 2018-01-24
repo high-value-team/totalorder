@@ -47,7 +47,7 @@ class SummaryContainer extends React.Component {
     };
 
     componentDidMount() {
-        this.props.loadSummary(this.props.projectID)
+        this.props.fetchAndHandleSummary(this.props.projectID);
     }
 
     render() {

@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as boxActionCreators from '../redux/project';
 import PropTypes from 'prop-types';
+import Typography from 'material-ui/Typography';
 
 class CreateProjectContainer extends React.Component {
 
@@ -16,21 +17,13 @@ class CreateProjectContainer extends React.Component {
         router: PropTypes.object.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        this.submitProjectWrapper = this.submitProjectWrapper.bind(this);
-    }
-
-    submitProjectWrapper(project) {
-        // // TODO react-router-redux.push() method, instead of dependency injection
-        const changeRoute = (url) => {this.props.router.replace(url)};
-        this.props.submitProject(project, changeRoute);
-    }
-
     render () {
         return (
             <div>
-                <CreateProjectPage submitProject={this.submitProjectWrapper} />
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'25px', color:'#0000008a'}}>
+                    Create Project
+                </Typography>
+                <CreateProjectPage submitProject={this.props.submitProject} />
             </div>
         );
     }

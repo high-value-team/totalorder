@@ -1,6 +1,6 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
-// import Navigation from '../components/Navigation';
+import Navigation from '../components/Navigation';
 
 import { withStyles } from 'material-ui/styles';
 import {bindActionCreators} from 'redux';
@@ -41,7 +41,7 @@ class MainContainer extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.container}>
-                {/*<Navigation title={'Totalorder'}/>*/}
+                <Navigation title={'Totalorder'}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
                     <p className="App-intro">{this.props.version}</p>

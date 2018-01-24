@@ -56,7 +56,7 @@ class OrderItems extends React.Component {
         super(props);
         // console.log(`items:${JSON.stringify(this.state.items, null, 2)}`);
         // console.log(`sortItems:${JSON.stringify(this.state.sortItems, null, 2)}`);
-        console.log(`items:${JSON.stringify(props.items, null, 2)}`);
+        // console.log(`items:${JSON.stringify(props.items, null, 2)}`);
 
         this.onDragEnd = this.onDragEnd.bind(this);
     }
@@ -72,7 +72,7 @@ class OrderItems extends React.Component {
             result.source.index,
             result.destination.index
         );
-        console.log(`items:${JSON.stringify(items, null, 2)}`);
+        // console.log(`items:${JSON.stringify(items, null, 2)}`);
         this.props.onOrder(items);
     }
 
