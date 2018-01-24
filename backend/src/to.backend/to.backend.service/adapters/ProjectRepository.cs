@@ -16,14 +16,12 @@ namespace to.backend.service.adapters
             _json = new System.Web.Script.Serialization.JavaScriptSerializer();
         }
         
-        public string Create(Project project) {
+        public void Create(Project project) {
             if (string.IsNullOrEmpty(project.Id))
-                project.Id = Guid.NewGuid().ToString();
+                throw new ApplicationException("ProjectRepository/Create projekt: Missing project id!");
             
             var projectJson = _json.Serialize(project);
             File.WriteAllText(new ProjectFilepath(_path, project.Id).Value, projectJson);
-            
-            return project.Id;
         }
 
         public Project Load(string projectId) {

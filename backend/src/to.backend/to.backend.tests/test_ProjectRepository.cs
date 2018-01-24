@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net.Mime;
 using NUnit.Framework;
 using to.backend.service;
 using to.backend.service.adapters;
@@ -23,46 +25,44 @@ namespace to.backend.tests
         {
             var sut = new ProjectRepository(REPO_PATH);
 
+            var projectId = "123";
             var prj = new Project {
+                Id = projectId,
                 Title = "T1",
                 ProductOwnerEmail = "po@acme.com",
-                Items = new[]{"a", "b", "c"}
+                Items = new[]{"a", "b", "c"},
+                SummaryPageUrl = "summary/123",
+                RearrangePageUrl = "rearrange/123"
             };
-            var id = sut.Create(prj);
+            sut.Create(prj);
 
-            var loadedPrj = sut.Load(id);
+            var loadedPrj = sut.Load(projectId);
             
-            Assert.AreEqual(id, loadedPrj.Id);
+            Assert.AreEqual(projectId, loadedPrj.Id);
             Assert.AreEqual(prj.Title, loadedPrj.Title);
             Assert.AreEqual(prj.ProductOwnerEmail, loadedPrj.ProductOwnerEmail);
             Assert.AreEqual(prj.Items, loadedPrj.Items);
             Assert.AreEqual(0, loadedPrj.ItemOrders.Length);
+            Assert.AreEqual("summary/123", loadedPrj.SummaryPageUrl);
+            Assert.AreEqual("rearrange/123", loadedPrj.RearrangePageUrl);
         }
         
         
         [Test]
-        public void Creat_project_with_given_id()
+        public void Project_must_have_id_upon_submission()
         {
             var sut = new ProjectRepository(REPO_PATH);
 
             var prj = new Project {
-                Id = "myproject",
-                Title = "T1",
-                ProductOwnerEmail = "po@acme.com",
-                Items = new[]{"a", "b", "c"}
+                Title = "T1"
             };
-            var id = sut.Create(prj);
-            Assert.AreEqual("myproject", id);
 
-            var loadedPrj = sut.Load(id);
-            
-            Assert.AreEqual(id, loadedPrj.Id);
-            Assert.AreEqual(prj.Title, loadedPrj.Title);
+            Assert.Throws<ApplicationException>(() => sut.Create(prj));
         }
-        
+
         
         [Test]
-        public void Project_with_given_id_overwrites_previous()
+        public void Project_with_same_id_overwrites_previous()
         {
             var sut = new ProjectRepository(REPO_PATH);
 
@@ -93,18 +93,20 @@ namespace to.backend.tests
         public void Add_item_orders_to_project()
         {
             var sut = new ProjectRepository(REPO_PATH);
-            
+
+            var projectId = "123";
             var prj = new Project {
+                Id = projectId,
                 Title = "T2",
                 ProductOwnerEmail = "po@acme.com",
                 Items = new[]{"x", "y", "z"}
             };
-            var id = sut.Create(prj);
+            sut.Create(prj);
             
-            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
-            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s2@acme.com", ItemIds = new[]{"2","1","0"}});
+            sut.Add_item_order_to_project(projectId, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
+            sut.Add_item_order_to_project(projectId, new ItemOrder{StakeholderEmail = "s2@acme.com", ItemIds = new[]{"2","1","0"}});
             
-            var loadedPrj = sut.Load(id);
+            var loadedPrj = sut.Load(projectId);
             Assert.AreEqual(2,loadedPrj.ItemOrders.Length);
             Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].StakeholderEmail);
             Assert.AreEqual(new[]{"0", "1", "2"}, loadedPrj.ItemOrders[0].ItemIds);
@@ -116,18 +118,20 @@ namespace to.backend.tests
         public void Overwrite_item_order()
         {
             var sut = new ProjectRepository(REPO_PATH);
-            
+
+            var projectId = "987";
             var prj = new Project {
+                Id = projectId,
                 Title = "T3",
                 ProductOwnerEmail = "po@acme.com",
                 Items = new[]{"x", "y", "z"}
             };
-            var id = sut.Create(prj);
+            sut.Create(prj);
             
-            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
-            sut.Add_item_order_to_project(id, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"2","1","0"}});
+            sut.Add_item_order_to_project(projectId, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"0","1","2"}});
+            sut.Add_item_order_to_project(projectId, new ItemOrder{StakeholderEmail = "s1@acme.com", ItemIds = new[]{"2","1","0"}});
             
-            var loadedPrj = sut.Load(id);
+            var loadedPrj = sut.Load(projectId);
             Assert.AreEqual(1,loadedPrj.ItemOrders.Length);
             Assert.AreEqual("s1@acme.com", loadedPrj.ItemOrders[0].StakeholderEmail);
             Assert.AreEqual(new[]{"2", "1", "0"}, loadedPrj.ItemOrders[0].ItemIds);

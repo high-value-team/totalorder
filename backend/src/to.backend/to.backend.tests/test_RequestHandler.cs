@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using NUnit.Framework;
 using to.backend.contract;
@@ -27,11 +28,17 @@ namespace to.backend.tests
             var sut = new RequestHandler(repo, mail);
 
             // create project
+            var projectId = "123abc";
             var prjId = sut.Create_project(new CreateProjectRequestDto {
+                Id = projectId,
                 Title = "P1",
                 ProductOwnerEmail = "po@acme.com",
-                Items = new[] {"a", "b", "c"}
+                Items = new[] {"a", "b", "c"},
+                SummaryPageUrlSchema = "summary/{projectid}",
+                RearrangePageUrlSchema = "rearrange/{PROJECTID}"
             });
+            Assert.IsTrue(mail.Body.IndexOf("summary/"+projectId) > 0);
+            Assert.IsTrue(mail.Body.IndexOf("rearrange/"+projectId) > 0);
 
             // initial summary shows items in original order
             var summary = sut.Generate_project_summary(prjId);
@@ -54,6 +61,7 @@ namespace to.backend.tests
                 StakeholderEmail = "s1@acme.com",
                 ItemIds = new[]{"0", "2", "1"}
             });
+            Assert.IsTrue(mail.Body.IndexOf("summary/"+projectId) > 0);
 
             // summary reflects first total order
             summary = sut.Generate_project_summary(prjId);
@@ -77,9 +85,12 @@ namespace to.backend.tests
 
         class MockMailProvider : IMailProvider
         {
-            public void Send_notification(string toEmail, string subject, string text)
+            public string Body;
+            
+            public void Send_notification(string toEmail, string subject, string body)
             {
-                Console.WriteLine($"Sending mail: {toEmail}, {subject}, {text}");
+                Body = body;
+                Debug.WriteLine($"Sending mail: {toEmail}, {subject}, {body}");
             }
         }
     }
