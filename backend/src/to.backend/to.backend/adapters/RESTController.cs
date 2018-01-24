@@ -53,12 +53,18 @@ namespace to.backend.adapters
         
         
         [EntryPoint(HttpMethods.Get, "/api/v1/version")]
-        public string Version() {
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            version = $"{DateTime.Now}: TotalOrder Version {version}, dbPath: {Config.DbPath}";
-            Console.WriteLine($"version: {version}");
+        public VersionDto Version() {
+            return new VersionDto {
+                Timestamp = DateTime.Now,
+                Number = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                DbPath = Config.DbPath
+            };
+        }
 
-            return version;
+        public class VersionDto {
+            public DateTime Timestamp;
+            public string Number;
+            public string DbPath;
         }
     }
 }
