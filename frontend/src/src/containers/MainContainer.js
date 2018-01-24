@@ -41,7 +41,7 @@ class MainContainer extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.container}>
-                <Navigation title={'Totalorder'}/>
+                <Navigation title={'TotalOrder'}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
                     <p className="App-intro">{this.props.version}</p>

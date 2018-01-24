@@ -7,8 +7,8 @@
 // response: read, validate, data mapping
 
 // const backendURL = 'https://us-central1-totalorder-4bafb.cloudfunctions.net/api';
-const backendURL = 'https://totalorder-backend.cloud.dropstack.run';
-// const backendURL = ''; // local
+// const backendURL = 'https://totalorder-backend.cloud.dropstack.run';
+const backendURL = ''; // local
 
 export function createProject(title, email, items) {
     const itemList = items.map((item) => item.text);

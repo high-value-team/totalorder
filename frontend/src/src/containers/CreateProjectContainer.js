@@ -20,7 +20,7 @@ class CreateProjectContainer extends React.Component {
     render () {
         return (
             <div>
-                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'25px', color:'#0000008a'}}>
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'15px', marginLeft: '20px', color:'#0000008a'}}>
                     Create Project
                 </Typography>
                 <CreateProjectPage submitProject={this.props.submitProject} />
