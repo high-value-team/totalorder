@@ -68,23 +68,9 @@ class OrderItemsPage extends React.Component {
                     <Typography type="headline" style={{margin: '8px', marginTop: '50px', color: '#0000008a'}}>Bring Items into total order:</Typography>
                     <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
 
-                    {/*<div>*/}
-                        {/*<TextField*/}
-                            {/*id="title"*/}
-                            {/*label="Your email"*/}
-                            {/*className={classes.textField}*/}
-                            {/*value={this.state.submitEmail}*/}
-                            {/*onChange={(e) => this.setState({submitEmail: e.target.value})}*/}
-                            {/*margin="normal"*/}
-                            {/*type="title"*/}
-                        {/*/>*/}
-                        {/*{this.state.submitEmailError ? <div id="submit-email-error">{this.state.submitEmailError}</div> : null}*/}
-                    {/*</div>*/}
-
-                    <FormControl className={classes.formControl} error aria-describedby="name-error-text">
-                        {/*<InputLabel htmlFor="name-error">Name</InputLabel>*/}
-                        {/*<Input id="name-error" value={this.state.name} onChange={this.handleChange} />*/}
+                    <FormControl error aria-describedby="name-error-text">
                         <TextField
+                            error={this.state.submitEmailError ? true : false}
                             id="title"
                             label="Your email"
                             className={classes.textField}
@@ -93,7 +79,7 @@ class OrderItemsPage extends React.Component {
                             margin="normal"
                             type="title"
                         />
-                        {this.state.submitEmailError ? <FormHelperText id="submit-email-error-text">{this.state.submitEmailError}</FormHelperText> : null }
+                        {this.state.submitEmailError ? <FormHelperText id="submit-email-error-text" style={{marginTop:'0px'}}>{this.state.submitEmailError}</FormHelperText> : null }
                     </FormControl>
 
                     <div>
