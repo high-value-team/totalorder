@@ -75,7 +75,16 @@ class CreateProjectPage extends React.Component {
 
     onSubmit () {
         if (this.validate()) {
-            this.props.submitProject({title: this.state.title, email: this.state.email, items: this.state.items});
+            const baseUrl = window.location.protocol + "//" + window.location.host;
+            const rearrangePageUrlSchema = `${baseUrl}/{projectID}/items`;
+            const summaryPageUrlSchema = `${baseUrl}/{projectID}/summary`;
+            this.props.submitProject({
+                title: this.state.title,
+                email: this.state.email,
+                items: this.state.items,
+                rearrangePageUrlSchema: rearrangePageUrlSchema,
+                summaryPageUrlSchema: summaryPageUrlSchema,
+            });
         }
     }
 
