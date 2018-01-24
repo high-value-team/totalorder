@@ -145,7 +145,7 @@ class ItemList extends React.Component {
                             className={[classes.textField, classes.col].join(' ')}
                             margin="normal"
                             fullWidth
-                            maxRows="99"
+                            // maxRows="99"
                             onChange={(e)=> this.setState({batchContent: e.target.value})}
                             onKeyPress={this.newItemHandleKeyPress}
                         />

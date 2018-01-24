@@ -1,6 +1,7 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
 import Navigation from '../components/Navigation';
+import {NODE_ENV, API_ROOT} from "../Config";
 
 import { withStyles } from 'material-ui/styles';
 import {bindActionCreators} from 'redux';
@@ -37,11 +38,17 @@ class MainContainer extends React.Component {
         this.props.loadVersion();
     }
 
+    constructor(props) {
+        super(props);
+        console.log(`NODE_ENV:${NODE_ENV}`);
+        console.log(`API_ROOT:${API_ROOT}`);
+    }
+
     render () {
         const { classes } = this.props;
         return (
             <div className={classes.container}>
-                <Navigation title={'Totalorder'}/>
+                <Navigation title={'TotalOrder'}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
                     <p className="App-intro">{this.props.version}</p>

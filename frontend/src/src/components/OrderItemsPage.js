@@ -6,6 +6,9 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+
+
 import Validator from 'validator';
 
 import OrderItems from './OrderItems'
@@ -61,8 +64,13 @@ class OrderItemsPage extends React.Component {
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={4}>
                     <Typography type="display2" className={classes.title} gutterBottom={true}>Total Order - Project {this.props.title}</Typography>
-                    <div>
+
+                    <Typography type="headline" style={{margin: '8px', marginTop: '50px', color: '#0000008a'}}>Bring Items into total order:</Typography>
+                    <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
+
+                    <FormControl error aria-describedby="name-error-text">
                         <TextField
+                            error={this.state.submitEmailError ? true : false}
                             id="title"
                             label="Your email"
                             className={classes.textField}
@@ -71,11 +79,8 @@ class OrderItemsPage extends React.Component {
                             margin="normal"
                             type="title"
                         />
-                        {this.state.submitEmailError ? <div id="submit-email-error">{this.state.submitEmailError}</div> : null}
-                    </div>
-
-                    <Typography type="headline" style={{margin: '8px', marginTop: '50px', color: '#0000008a'}}>Bring Items into total order:</Typography>
-                    <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
+                        {this.state.submitEmailError ? <FormHelperText id="submit-email-error-text" style={{marginTop:'0px'}}>{this.state.submitEmailError}</FormHelperText> : null }
+                    </FormControl>
 
                     <div>
                         <Button raised={true} color="primary" className={classes.button} onClick={this.onSubmit}>

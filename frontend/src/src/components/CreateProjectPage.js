@@ -6,6 +6,7 @@ import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 import Validator from 'validator';
 
 import ItemList from './ItemList';
@@ -75,7 +76,16 @@ class CreateProjectPage extends React.Component {
 
     onSubmit () {
         if (this.validate()) {
-            this.props.submitProject({title: this.state.title, email: this.state.email, items: this.state.items});
+            const baseUrl = window.location.protocol + "//" + window.location.host;
+            const rearrangePageUrlSchema = `${baseUrl}/{projectID}/items`;
+            const summaryPageUrlSchema = `${baseUrl}/{projectID}/summary`;
+            this.props.submitProject({
+                title: this.state.title,
+                email: this.state.email,
+                items: this.state.items,
+                rearrangePageUrlSchema: rearrangePageUrlSchema,
+                summaryPageUrlSchema: summaryPageUrlSchema,
+            });
         }
     }
 
@@ -143,36 +153,44 @@ class CreateProjectPage extends React.Component {
                 <Paper className={classes.paper} elevation={4}>
                     {/*<Typography className={classes.title} type="display2" gutterBottom={true}>Create Project</Typography>*/}
                     <div>
-                        <TextField
-                            id="title"
-                            label="Project Title"
-                            className={classes.textField}
-                            value={state.title}
-                            onChange={this.onTextFieldChange}
-                            margin="normal"
-                            type="title"
-                        />
-                        {state.titleError ? <div id="title-error">{state.titleError}</div> : null}
+                        <FormControl error aria-describedby="title-error-text">
+                            <TextField
+                                error={this.state.titleError ? true : false}
+                                id="title"
+                                label="Project Title"
+                                className={classes.textField}
+                                value={state.title}
+                                onChange={this.onTextFieldChange}
+                                margin="normal"
+                                type="title"
+                            />
+                            {this.state.titleError ? <FormHelperText id="title-error-text" style={{marginTop:'0px'}}>{this.state.titleError}</FormHelperText> : null }
+                        </FormControl>
                     </div>
+
                     <div>
-                        <TextField
-                            id="email"
-                            label="Your Email"
-                            className={classes.textField}
-                            value={state.email}
-                            onChange={this.onTextFieldChange}
-                            margin="normal"
-                            type="email"
-                        />
-                        {state.emailError ? <div id="email-error">{state.emailError}</div> : null}
+                        <FormControl error aria-describedby="email-error-text">
+                            <TextField
+                                id="email"
+                                label="Your Email"
+                                className={classes.textField}
+                                value={state.email}
+                                onChange={this.onTextFieldChange}
+                                margin="normal"
+                                type="email"
+                            />
+                            {this.state.emailError ? <FormHelperText id="email-error-text" style={{marginTop:'0px'}}>{this.state.emailError}</FormHelperText> : null }
+                        </FormControl>
                     </div>
 
                     <Typography type="title" color="inherit" style={{fontWeight: 'bold', marginTop:'60px', color:'#0000008a'}}>
                         items to order
                     </Typography>
 
-                    <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
-                    {state.itemsError ? <div id="items-error">{state.itemsError}</div> : null}
+                    <FormControl error aria-describedby="items-error-text">
+                        <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
+                        {this.state.itemsError ? <FormHelperText id="items-error-text" style={{marginTop:'0px'}}>{this.state.itemsError}</FormHelperText> : null }
+                    </FormControl>
 
                     <div>
                         <Button raised={true} color="primary" className={classes.button} onClick={this.onSubmit}>

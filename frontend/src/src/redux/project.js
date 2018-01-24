@@ -57,7 +57,7 @@ function fetchingSummaryError(error) {
 export function submitProject(project) {
     return function (dispatch) {
         console.log("items:"+ project.items);
-        api.createProject(project.title, project.email, project.items)
+        api.createProject(project.title, project.email, project.items, project.rearrangePageUrlSchema, project.summaryPageUrlSchema)
             .then((projectID) => {
                 dispatch(newID(projectID));
                 browserHistory.push(`/${projectID}/invitation`);

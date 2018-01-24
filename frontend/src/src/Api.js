@@ -1,3 +1,4 @@
+import {API_ROOT} from "./Config";
 
 //
 // api
@@ -6,23 +7,21 @@
 // request: write, data mapping
 // response: read, validate, data mapping
 
-// const backendURL = 'https://us-central1-totalorder-4bafb.cloudfunctions.net/api';
-const backendURL = 'https://totalorder-backend.cloud.dropstack.run';
-// const backendURL = ''; // local
-
-export function createProject(title, email, items) {
+export function createProject(title, email, items, rearrangePageUrlSchema, summaryPageUrlSchema) {
     const itemList = items.map((item) => item.text);
     const body = JSON.stringify({
         title: title,
         productowneremail: email,
         items: itemList,
+        rearrangePageUrlSchema: rearrangePageUrlSchema,
+        summaryPageUrlSchema: summaryPageUrlSchema,
     });
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Content-Length', body.length);
 
     return new Promise((resolve, reject) => {
-        fetch(`${backendURL}/api/v1/projects`, {
+        fetch(`${API_ROOT}/api/v1/projects`, {
             method: 'POST',
             headers,
             body,
@@ -52,7 +51,7 @@ export function createOrder(projectID, stakeholderemail, items) {
     headers.append('Content-Length', body.length);
 
     return new Promise((resolve, reject) => {
-        fetch(`${backendURL}/api/v1/projects/${projectID}/submissions`, {
+        fetch(`${API_ROOT}/api/v1/projects/${projectID}/submissions`, {
             method: 'POST',
             headers,
             body,
@@ -73,7 +72,7 @@ export function createOrder(projectID, stakeholderemail, items) {
 
 export function fetchSummary(projectID) {
     return new Promise((resolve, reject) => {
-        fetch(`${backendURL}/api/v1/projects/${projectID}/summary`, {
+        fetch(`${API_ROOT}/api/v1/projects/${projectID}/summary`, {
             method: 'GET',
         }).then(resp => {
             if (resp.ok) {
@@ -96,7 +95,7 @@ export function fetchSummary(projectID) {
 
 export function getItems(projectID) {
     return new Promise((resolve, reject) => {
-        fetch(`${backendURL}/api/v1/projects/${projectID}/items`, {
+        fetch(`${API_ROOT}/api/v1/projects/${projectID}/items`, {
             method: 'GET',
         }).then(resp => {
             if (resp.ok) {
@@ -115,7 +114,7 @@ export function getItems(projectID) {
 
 export function getVersion() {
     return new Promise((resolve, reject) => {
-        fetch(`${backendURL}/api/v1/version`, {
+        fetch(`${API_ROOT}/api/v1/version`, {
             method: 'GET',
         }).then(resp => {
             if (resp.ok) {

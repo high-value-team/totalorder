@@ -1,0 +1,10 @@
+{
+  "variables": "",
+  "instances": 1,
+  "alias": "totalorder.cloud.dropstack.run",
+  "type": "web",
+  "excludes": [],
+  "stateful": false,
+  "name": "fhbbjdnb",
+  "serviceUrl": "fhbbjdnb.cloud.dropstack.run"
+}
