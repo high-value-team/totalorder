@@ -14,7 +14,7 @@ namespace to.backend.service.adapters
         private const string TOTAL_ORDER_FROM_EMAIL = "noreply-totalorder@ralfw.de"; // needs to be long to the registered domain
         
         
-        public void Send_notification(string toEmail, string subject, string text) {
+        public void Send_notification(string toEmail, string subject, string body) {
             var client = new RestClient {
                 BaseUrl = new Uri("https://api.mailgun.net/v3"),
                 Authenticator = new HttpBasicAuthenticator("api", MAILGUN_API_KEY)
@@ -26,7 +26,7 @@ namespace to.backend.service.adapters
             request.AddParameter ("from", TOTAL_ORDER_FROM_EMAIL);
             request.AddParameter ("to", toEmail);
             request.AddParameter ("subject", subject);
-            request.AddParameter ("text", text);
+            request.AddParameter ("text", body);
             request.Method = Method.POST;
             
             client.Execute (request);
