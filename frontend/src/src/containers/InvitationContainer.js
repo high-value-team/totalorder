@@ -14,21 +14,10 @@ const styles = theme => ({
         fontFamily: 'Roboto, sans-serif',
         width: '100%',
     },
-    container: {
-        width: '100%',
-    },
-    innerContainer: {
-        maxWidth: '900px',
-        margin: '0px auto',
-    },
     paper: {
         paddingTop: '10px',
         paddingLeft: '30px',
         paddingBottom: '30px',
-    },
-    headline: {
-
-        color: '#0000008a',
     },
 });
 
@@ -70,16 +59,12 @@ class InvitationContainer extends React.Component {
                     Project Created
                 </Typography>
                 <Paper className={classes.paper} elevation={4}>
-                    <Grid container spacing={0}>
-                        <Grid item xs={0}>
-                            <Typography type="title" style={{color: '#0000008a', marginTop: '30px', marginRight: '10px'}}className={classes.headline}>Invitation Link:</Typography>
-                            <Typography type="title" style={{color: '#0000008a', marginTop: '10px', marginBottom: '20px', marginRight: '10px'}}>Admin Link:</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography type="title" style={{color: '#0000008a', marginTop: '30px'}} className={classes.headline}><a href={this.state.invitationLink}>{this.state.invitationLink}</a></Typography>
-                            <Typography type="title" style={{color: '#0000008a', marginTop: '10px', marginBottom: '20px'}}><a href={this.state.adminLink}>{this.state.adminLink}</a></Typography>
-                        </Grid>
-                    </Grid>
+                    <Typography type="title" style={{color: '#0000008a', marginTop: '30px', marginRight: '10px'}}>
+                        Invitation Link: <a href={this.state.invitationLink}>{this.state.invitationLink}</a>
+                    </Typography>
+                    <Typography type="title" style={{color: '#0000008a', marginTop: '10px', marginBottom: '20px', marginRight: '10px'}}>
+                        Admin Link: <a href={this.state.adminLink}>{this.state.adminLink}</a>
+                    </Typography>
                 </Paper>
             </div>
         );

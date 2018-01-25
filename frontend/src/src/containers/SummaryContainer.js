@@ -48,11 +48,21 @@ const styles = theme => ({
 class SummaryContainer extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        projectID: PropTypes.string.isRequired,
     };
 
     static contextTypes = {
         router: PropTypes.object.isRequired,
     };
+
+    constructor(props) {
+        super(props);
+        const baseUrl = window.location.protocol + "//" + window.location.host;
+        this.state = {
+            invitationLink: `${baseUrl}/${props.projectID}/items`,
+            adminLink: `${baseUrl}/${props.projectID}/summary`,
+        };
+    }
 
     componentDidMount() {
         this.props.fetchAndHandleSummary(this.props.projectID);
@@ -74,6 +84,9 @@ class SummaryContainer extends React.Component {
                             return <li key={item.id} className={classes.listItem}>{item.text}</li>
                         })}
                     </ol>
+                    <Typography type="body1" style={{color: '#0000008a', marginTop: '50px', marginRight: '10px'}}>
+                        Invitation Link: <a href={this.state.invitationLink}>{this.state.invitationLink}</a>
+                    </Typography>
                 </Paper>
             </div>
         );

@@ -9,11 +9,8 @@ import {connect} from "react-redux";
 import * as boxActionCreators from "../redux/project";
 
 const styles = theme => ({
-    root: {
-        fontFamily: 'Roboto, sans-serif',
-        width: '100%',
-    },
     container: {
+        fontFamily: 'Roboto, sans-serif',
         width: '100%',
     },
     innerContainer: {
@@ -65,7 +62,7 @@ class MainContainer extends React.Component {
                 <Navigation title={title}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
-                    <p>{this.formatVersion(this.props.version)}</p>
+                    <p style={{color: '#0000008a', fontSize:'10px',}}>{this.formatVersion(this.props.version)}</p>
                 </div>
             </div>
         );
