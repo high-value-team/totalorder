@@ -13,13 +13,15 @@ import ItemList from './ItemList';
 
 const styles = theme => ({
     root: {
-        // fontFamily: 'Roboto, sans-serif',
+        fontFamily: 'Roboto, sans-serif',
+        color: '#0000008a',
         // width: '100%',
     },
     paper: {
         paddingTop: '10px',
         paddingLeft: '30px',
         paddingBottom: '30px',
+        paddingRight: '50px',
     },
     container: {
     },
@@ -187,7 +189,7 @@ class CreateProjectPage extends React.Component {
                         items to order
                     </Typography>
 
-                    <FormControl error aria-describedby="items-error-text">
+                    <FormControl error aria-describedby="items-error-text" style={{width:'100%'}}>
                         <ItemList items={state.items} onChangeItems={(items) => this.setItems(items)}/>
                         {this.state.itemsError ? <FormHelperText id="items-error-text" style={{marginTop:'0px'}}>{this.state.itemsError}</FormHelperText> : null }
                     </FormControl>

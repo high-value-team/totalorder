@@ -13,15 +13,19 @@ import Validator from 'validator';
 import OrderItems from './OrderItems'
 
 const styles = theme => ({
-    root:{},
+    root:{
+        fontFamily: 'Roboto, sans-serif',
+        color: '#0000008a',
+    },
     container: {},
     title: {
         margin: theme.spacing.unit,
     },
     paper: {
-        paddingTop: '10px',
+        paddingTop: '30px',
         paddingLeft: '30px',
         paddingBottom: '30px',
+        paddingRight: '30px',
     },
     button: {
         marginLeft: `0px`,
@@ -64,7 +68,7 @@ class OrderItemsPage extends React.Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.paper} elevation={4}>
-                    <OrderItems items={this.props.items} onOrder={this.props.orderChanged} />
+                    <OrderItems items={this.props.items} onOrder={this.props.orderChanged} style={{width:'100%'}}/>
 
                     <FormControl error aria-describedby="name-error-text">
                         <TextField

@@ -21,13 +21,14 @@ const styles = theme => ({
         margin: '0px auto',
     },
     paper: {
-        paddingTop: '10px',
+        paddingTop: '30px',
         paddingLeft: '30px',
+        paddingRight: '30px',
         paddingBottom: '30px',
     },
     headline: {
         margin: '0px',
-        marginTop: '30px',
+        // marginTop: '30px',
         color: '#0000008a',
     },
     orderedList: {

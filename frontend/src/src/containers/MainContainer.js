@@ -65,7 +65,7 @@ class MainContainer extends React.Component {
                 <Navigation title={title}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
-                    <p className="App-intro">{this.formatVersion(this.props.version)}</p>
+                    <p>{this.formatVersion(this.props.version)}</p>
                 </div>
             </div>
         );

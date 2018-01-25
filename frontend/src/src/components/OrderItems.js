@@ -34,8 +34,9 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightgrey' : 'white',
     padding: `0px`,
-    marginTop: `20px`,
-    width: 250,
+    // marginTop: `20px`,
+    // width: 250,
+    width: '100%',
 });
 
 const styles = theme => ({
