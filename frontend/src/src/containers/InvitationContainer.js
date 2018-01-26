@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import {withStyles} from "material-ui/styles/index";
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
 
 const styles = theme => ({
     root: {
