@@ -17,9 +17,8 @@ const styles = theme => ({
 
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: '250px'
+        // width: '250px'
+        width: '100%',
     },
 
     row: {
@@ -50,6 +49,9 @@ class ItemList extends React.Component {
         this.state = {
             batchContent: '',
             lastKeyPressEnter: false,
+            maxWidth: 300,
+            maxText: '',
+            maxTextLength: 0,
         };
         this.add = this.add.bind(this);
         this.remove = this.remove.bind(this);
@@ -76,7 +78,7 @@ class ItemList extends React.Component {
 
         const items = [...this.props.items, ...newItems];
         this.props.onChangeItems(items);
-        this.setState({batchContent:''});
+        this.setState({batchContent:''}); // TODO new input field is not empty, it contains a \n
     }
 
     remove (index) {
@@ -84,7 +86,18 @@ class ItemList extends React.Component {
         this.props.onChangeItems(this.props.items);
     }
 
-    update (value, index) {
+    update (event, index) {
+        // if (this.state.maxTextLength < event.target.value.length) {
+        //     this.setState({maxText: event.target.value});
+        //     // console.log(`${event.target.id} maxTextLength:${this.state.maxTextLength} length:${event.target.value.length}`);
+        //     // this.setState({maxTextLength: event.target.value.length});
+        // }
+        // if (this.state.maxWidth < event.target.clientWidth) {
+        //     console.log(`maxWidth:${event.target.clientWidth}`);
+        //     this.setState({maxWidth: event.target.clientWidth + 50});
+        // }
+
+        const value = event.target.value;
         const items = this.props.items.map( (item, idx) => {
             if (idx === index) {
                 item = {id: item.id, text: value};
@@ -124,16 +137,20 @@ class ItemList extends React.Component {
             <ol className={classes.orderedList}>
                 {this.props.items.map( (item, index) => {
                     return <li key={index} className={classes.listItem}>
+                        <div className={classes.row}>
                         <TextField
                             id={item.id}
                             label=""
                             className={classes.textField}
                             value={item.text}
-                            onChange={(e) => this.update(e.target.value, index)}
+                            onChange={(e) => this.update(e, index)}
                             margin="normal"
                             type="text"
                         />
-                        <RemoveIcon onClick={() => this.remove(index)}/>
+                            <div className={[classes.buttonWrap, classes.col].join(' ')}>
+                                <RemoveIcon className={classes.button} onClick={() => this.remove(index)}/>
+                            </div>
+                        </div>
                     </li>
                 })}
                 <li key={"newItem"}>
@@ -145,7 +162,6 @@ class ItemList extends React.Component {
                             className={[classes.textField, classes.col].join(' ')}
                             margin="normal"
                             fullWidth
-                            // maxRows="99"
                             onChange={(e)=> this.setState({batchContent: e.target.value})}
                             onKeyPress={this.newItemHandleKeyPress}
                         />

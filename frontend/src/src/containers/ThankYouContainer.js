@@ -18,7 +18,7 @@ const styles = theme => ({
     },
     headline: {
         margin: '8px',
-        marginTop: '50px',
+        marginTop: '30px',
         color: '#0000008a',
     },
 });
@@ -45,9 +45,11 @@ class ThankYouContainer extends React.Component {
 
         return (
             <div className={classes.root}>
+                <Typography type="headline" color="inherit" style={{fontWeight:'bold', margin:'15px', marginLeft: '20px', color:'#0000008a'}}>
+                    Thank You
+                </Typography>
                 <Paper className={classes.paper} elevation={4}>
-                    <Typography type="headline" className={classes.headline}>Total Order: Project {this.state.title}</Typography>
-                    <Typography type="headline" className={classes.headline}>Thank you for submitting your total item order!</Typography>
+                    <Typography type="title" className={classes.headline}>Thank you for submitting your total item order!</Typography>
                 </Paper>
             </div>
         );
