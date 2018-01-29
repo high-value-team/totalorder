@@ -25,6 +25,7 @@ const styles = theme => ({
         paddingLeft: '30px',
         paddingRight: '30px',
         paddingBottom: '30px',
+        opacity: '0.9',
     },
     headline: {
         margin: '0px',

@@ -15,6 +15,7 @@ const styles = theme => ({
     },
     paper: {
         padding: '30px',
+        opacity: '0.9',
     },
     headline: {
         margin: '8px',

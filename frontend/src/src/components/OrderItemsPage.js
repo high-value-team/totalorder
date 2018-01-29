@@ -26,6 +26,7 @@ const styles = theme => ({
         paddingLeft: '30px',
         paddingBottom: '30px',
         paddingRight: '30px',
+        opacity: '0.9',
     },
     button: {
         marginLeft: `0px`,
