@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 
 import OrderItemsPage from '../components/OrderItemsPage';
-import * as projectActionCreators from '../redux/project';
+import * as projectActionCreators from '../Redux';
 
 class OrderItemsContainer extends React.Component {
 
