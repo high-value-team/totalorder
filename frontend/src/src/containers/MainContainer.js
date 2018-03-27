@@ -62,7 +62,7 @@ class MainContainer extends React.Component {
                 <Navigation title={title}/>
                 <div className={classes.innerContainer}>
                     {this.props.children}
-                    <p style={{color: '#0000008a', fontSize:'10px',}}>{this.formatVersion(this.props.version)} - Brought to you by <a href="http://ccd-school.de" target="_blank">ccd-school.de</a></p>
+                    <p style={{color: '#0000008a', fontSize:'10px',}}>{this.formatVersion(this.props.version)} - Brought to you by <a href="http://ccd-school.de" target="_blank" rel="noopener noreferrer">ccd-school.de</a></p>
                 </div>
             </div>
         );
