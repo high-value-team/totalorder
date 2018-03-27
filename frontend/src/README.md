@@ -14,3 +14,9 @@ Frontend Server starten
 ```
 serve --port 8080 build
 ```
+
+
+Development Mode (with custom node backend)
+```
+yarn dev
+```
