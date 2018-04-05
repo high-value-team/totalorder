@@ -10,17 +10,13 @@ import * as projectActionCreators from '../Redux';
 class OrderItemsContainer extends React.Component {
 
     static propTypes = {
-        router: PropTypes.object.isRequired,
         submitOrder: PropTypes.func.isRequired,
         orderChanged: PropTypes.func.isRequired,
+        loadItems: PropTypes.func.isRequired,
         projectID: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         email: PropTypes.string.isRequired,
         items: PropTypes.array.isRequired,
-    };
-
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
     };
 
     componentDidMount() {

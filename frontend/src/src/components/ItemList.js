@@ -108,7 +108,7 @@ class ItemList extends React.Component {
     }
 
     newItemHandleKeyPress (e) {
-        console.log(`lastKeyPressEnter:${this.state.lastKeyPressEnter}`);
+        // console.log(`lastKeyPressEnter:${this.state.lastKeyPressEnter}`);
         if (this.state.lastKeyPressEnter && e.key === 'Enter') {
             this.add();
         }

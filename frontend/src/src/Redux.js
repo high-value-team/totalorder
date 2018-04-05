@@ -1,6 +1,7 @@
 import 'react-redux'
 import { browserHistory } from 'react-router'
 import * as api from './Api'
+import {COSMOS} from './Config'
 
 //
 // actions constants
@@ -26,7 +27,7 @@ function newID(projectID) {
     }
 }
 
-export function orderChanged(items) {
+function orderChanged(items) {
     return {
         type: CHANGING_ORDER,
         items,
@@ -54,7 +55,8 @@ function fetchingSummaryError(error) {
 // action creators
 //
 
-export function submitProject(project) {
+
+function submitProject(project) {
     return function (dispatch) {
         console.log("items:"+ project.items);
         api.createProject(project.title, project.email, project.items, project.rearrangePageUrlSchema, project.summaryPageUrlSchema)
@@ -69,7 +71,7 @@ export function submitProject(project) {
     };
 }
 
-export function submitOrder(projectID, stakeholderemail, items) {
+function submitOrder(projectID, stakeholderemail, items) {
     return function(dispatch) {
         api.createOrder(projectID, stakeholderemail, items)
             .then(() => {
@@ -83,7 +85,7 @@ export function submitOrder(projectID, stakeholderemail, items) {
 }
 
 
-export function fetchAndHandleSummary(projectID) {
+function fetchAndHandleSummary(projectID) {
     return function (dispatch) {
         api.fetchSummary(projectID)
             .then((summary) => dispatch(fetchingSummarySuccess(summary, projectID)))
@@ -91,7 +93,7 @@ export function fetchAndHandleSummary(projectID) {
     }
 }
 
-export function loadItems(projectID) {
+function loadItems(projectID) {
     return function(dispatch) {
         api.getItems(projectID)
             .then((body) => {
@@ -108,7 +110,7 @@ export function loadItems(projectID) {
     }
 }
 
-export function loadVersion() {
+function loadVersion() {
     return function(dispatch) {
         api.getVersion()
             .then((version) => {
@@ -146,7 +148,8 @@ const initialState = {
     version: '',
 };
 
-export default function project (state = initialState, action) {
+// export default function project (state = initialState, action) {
+function project (state = initialState, action) {
     switch (action.type) {
         case CREATE_PROJECT :
             return {
@@ -188,3 +191,22 @@ export default function project (state = initialState, action) {
             return state;
     }
 }
+
+if (COSMOS) {
+    // eslint-disable-next-line no-func-assign
+    submitProject = undefined;
+    // eslint-disable-next-line no-func-assign
+    submitOrder = undefined;
+
+}
+
+export {
+    orderChanged,
+    submitProject,
+    submitOrder,
+    fetchAndHandleSummary,
+    loadItems,
+    loadVersion,
+};
+
+export default project;

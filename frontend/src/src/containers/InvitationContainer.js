@@ -24,12 +24,8 @@ const styles = theme => ({
 class InvitationContainer extends React.Component {
 
     static propTypes = {
-        router: PropTypes.object.isRequired,
-        submitProject: PropTypes.func.isRequired,
-        fetchAndHandleSummary: PropTypes.func.isRequired,
         projectID: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        itemCount: PropTypes.number.isRequired,
     };
 
     static contextTypes = {
@@ -43,10 +39,6 @@ class InvitationContainer extends React.Component {
             invitationLink: `${baseUrl}/${props.projectID}/items`,
             adminLink: `${baseUrl}/${props.projectID}/summary`,
         };
-    }
-
-    componentDidMount() {
-        this.props.fetchAndHandleSummary(this.props.projectID)
     }
 
     render() {
@@ -75,8 +67,6 @@ function mapStateToProps (state, props) {
     return {
         projectID: props.router.params.projectID,
         title: state.project.title,
-        itemCount: state.project.items.length,
-
     };
 }
 

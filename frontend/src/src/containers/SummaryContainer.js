@@ -50,10 +50,8 @@ class SummaryContainer extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         projectID: PropTypes.string.isRequired,
-    };
-
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
+        numberOfSubmissions: PropTypes.number.isRequired,
+        items: PropTypes.array.isRequired,
     };
 
     constructor(props) {

@@ -3,8 +3,13 @@ var bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 
+// app.get('background.png', (req, res) => {
+//
+// });
 app.get('/api/v1/version', (req, res) => {
     res.json({
         timestamp: (new Date()).toISOString(),

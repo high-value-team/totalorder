@@ -9,12 +9,7 @@ import Typography from 'material-ui/Typography';
 class CreateProjectContainer extends React.Component {
 
     static propTypes = {
-        router: PropTypes.object.isRequired,
         submitProject: PropTypes.func.isRequired,
-    };
-
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
     };
 
     render () {

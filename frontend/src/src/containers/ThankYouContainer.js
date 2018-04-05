@@ -27,11 +27,7 @@ const styles = theme => ({
 class ThankYouContainer extends React.Component {
 
     static propTypes = {
-        router: PropTypes.object.isRequired,
-    };
-
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
+        title: PropTypes.string.isRequired,
     };
 
     constructor(props) {

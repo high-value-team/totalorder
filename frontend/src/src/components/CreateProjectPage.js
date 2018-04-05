@@ -142,7 +142,7 @@ class CreateProjectPage extends React.Component {
 
     appendItems (items) {
         const newItems = [...this.state.items, ...items];
-        console.log("newItems:" + newItems);
+        // console.log("newItems:" + newItems);
         this.setState({items:newItems});
     }
 

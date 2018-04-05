@@ -20,3 +20,8 @@ Development Mode (with custom node backend)
 ```
 yarn dev
 ```
+
+Cosmos - Playground UI
+```
+yarn cosmos
+```

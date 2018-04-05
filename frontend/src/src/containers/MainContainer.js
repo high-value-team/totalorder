@@ -27,10 +27,6 @@ class MainContainer extends React.Component {
         children: PropTypes.node,
     };
 
-    static contextTypes = {
-        router: PropTypes.object.isRequired,
-    };
-
     componentDidMount() {
         this.props.loadVersion();
     }
@@ -49,6 +45,7 @@ class MainContainer extends React.Component {
         if (!version) {
             return 'Backend not available!';
         }
+        console.log(`version:${version}`);
         const v = JSON.parse(version);
         const date = new Date(v.timestamp);
         return `Backend version: ${v.number}, ${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`;
@@ -77,10 +74,14 @@ function mapDispatchToProps (dispatch) {
     return bindActionCreators(boxActionCreators, dispatch);
 }
 
+export const MainContainerUnwrapped = MainContainer;
+
 export default withStyles(styles)(connect(
     mapStateToProps,
     mapDispatchToProps,
 )(MainContainer));
+
+
 
 
 
