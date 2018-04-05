@@ -17,18 +17,19 @@ install build dependencies
 yarn install
 ```
 
-create and configure environment files (e.g. .env.development)
-```
-cp "environment examples"/dropstack .env.dropstack
-cp "environment examples"/development .env.development
-cp "environment examples"/production .env.production
-```
-
 ## Run Tasks
 
 ```
-run start  // start frontend on local machine
-run build  // build frontend into bin directory
-run deploy // deploy to dropstack
+run setup                           - Create environment files, e.g. env.production. Please edit files with useful values!
+run start                           - Run frontend start scripts using env.development
+run start:development               - Run frontend start scripts using env.development
+run start:production                - Run frontend start scripts using env.production
+run deploy                          - Create deploy folder and deploy to Dropstack
+run deploy:clean                    - Remove all "deploy" folders
+run build                           - Run frontend build scripts using env.production
+run build:production                - Run frontend build scripts using env.production
+run build:development               - Run frontend build scripts using env.development
+run build:clean                     - Remove all "bin" folders
 ```
 
+Execute `run` to list all available tasks
