@@ -1,1 +1,7 @@
-/bin
+# .env files, only in this directory
+/env.*
+/bin.*/
+/deploy.*/
+
+# dependencies
+node_modules
