@@ -52,12 +52,33 @@ function start () {
         return
     }
 
-    const startBackend = `docker run --interactive --env TOTALORDER_BACKEND_DATABASEPATH=/mnt --publish "127.0.0.1:8080:80" --volume ${binPath}:/workdir mono sh << EOF
+    stop();
+
+    const startBackend = `docker run --name=totalorder-backend --interactive --env TOTALORDER_BACKEND_DATABASEPATH=/mnt --publish "127.0.0.1:8080:80" --volume ${binPath}:/workdir mono sh << EOF
 mono /workdir/to.backend.exe
 EOF`;
     run(startBackend);
 }
-help(start, 'Run backend start scripts');
+help(start, 'Start backend in docker container. Please execute "run stop" to manually stop the container!');
+
+function stop () {
+    const containerName = 'totalorder-backend';
+    console.log(`checking if '${containerName}'-container is running`);
+    let containerID = run(`docker ps --filter "name=${containerName}" --format "{{.ID}}"`, {stdio: 'pipe'});
+    if (containerID.length !== 0) {
+        run(`docker kill ${containerName}`);
+    }
+    console.log();
+
+    console.log(`checking if '${containerName}'-container exists`);
+    containerID = run(`docker ps --all --filter "name=${containerName}" --format "{{.ID}}"`, {stdio: 'pipe'});
+    if (containerID.length !== 0) {
+        run(`docker rm ${containerName}`);
+    }
+    console.log();
+}
+help(stop, 'Stop running backend in docker container');
+
 
 function deploy () {
     const binPath = findNewestBinFolder();
@@ -171,6 +192,7 @@ module.exports = {
     setup,
     build,
     start,
+    stop,
     deploy,
     'clean:build': clean_build,
     'clean:deploy': clean_deploy,
