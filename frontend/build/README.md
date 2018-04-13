@@ -19,17 +19,24 @@ yarn install
 
 ## Run Tasks
 
+`run [taskname]`
+
+e.g. `run start`
+
+Available tasks:
 ```
-run setup                           - Create environment files, e.g. env.production. Please edit files with useful values!
-run start                           - Run frontend start scripts using env.development
-run start:development               - Run frontend start scripts using env.development
-run start:production                - Run frontend start scripts using env.production
-run deploy                          - Create deploy folder and deploy to Dropstack
-run deploy:clean                    - Remove all "deploy" folders
-run build                           - Run frontend build scripts using env.production
-run build:production                - Run frontend build scripts using env.production
-run build:development               - Run frontend build scripts using env.development
-run build:clean                     - Remove all "bin" folders
+setup                           - Create environment files, e.g. env.production. Please edit files with useful values!
+install                         - Install all dependencies in "src" folder
+start                           - Run frontend start scripts using env.development
+start:development               - Run frontend start scripts using env.development
+start:production                - Run frontend start scripts using env.production
+build                           - Run frontend build scripts using env.production
+build:production                - Run frontend build scripts using env.production
+build:development               - Run frontend build scripts using env.development
+deploy                          - Create deploy folder and deploy to Dropstack
+clean:install                   - Remove installed libraries in "src" folder
+clean:build                     - Remove all "bin" folders
+clean:deploy                    - Remove all "deploy" folders
 ```
 
 Execute `run` to list all available tasks

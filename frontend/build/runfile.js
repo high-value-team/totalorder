@@ -29,6 +29,11 @@ function setup() {
 }
 help(setup, 'Create environment files, e.g. env.production. Please edit files with useful values!');
 
+function install() {
+    run(`cd ../src && yarn install`);
+}
+help(install, 'Install all dependencies in "src" folder');
+
 function start_development () {
     const envFile = 'env.development';
     const envObj = loadEnvironment(envFile);
@@ -65,17 +70,6 @@ function _build (envPath) {
     run(`cp -r ../src/build bin.${timestamp()}`);
 }
 
-function build_clean() {
-    fs.readdirSync('.').forEach(file => {
-        if (fs.statSync(file).isDirectory() && file.match(/^bin\.[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}$/)) {
-            const removeDirectory = `rm -rf ${file}`;
-            run(removeDirectory);
-        }
-    });
-
-}
-help(build_clean, 'Remove all "bin" folders');
-
 function deploy () {
     const binPath = findNewestBinFolder();
     if (binPath === undefined) {
@@ -98,7 +92,23 @@ function deploy () {
 }
 help(deploy, 'Create deploy folder and deploy to Dropstack');
 
-function deploy_clean() {
+function clean_install() {
+    run(`cd ../src && rm -r node_modules`);
+}
+help(clean_install, 'Remove installed libraries in "src" folder');
+
+function clean_build() {
+    fs.readdirSync('.').forEach(file => {
+        if (fs.statSync(file).isDirectory() && file.match(/^bin\.[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}$/)) {
+            const removeDirectory = `rm -rf ${file}`;
+            run(removeDirectory);
+        }
+    });
+
+}
+help(clean_build, 'Remove all "bin" folders');
+
+function clean_deploy() {
     fs.readdirSync('.').forEach(file => {
         if (fs.statSync(file).isDirectory() && file.match(/^deploy\.[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}$/)) {
             const removeDirectory = `rm -rf ${file}`;
@@ -106,7 +116,7 @@ function deploy_clean() {
         }
     })
 }
-help(deploy_clean, 'Remove all "deploy" folders');
+help(clean_deploy, 'Remove all "deploy" folders');
 
 //
 // helper
@@ -166,15 +176,20 @@ function timestamp() {
 module.exports = {
     setup,
 
+    install,
+
     start: start_development,
     'start:development': start_development,
     'start:production': start_production,
 
-    deploy,
-    'deploy:clean': deploy_clean,
 
     'build': build_production,
     'build:production': build_production,
     'build:development': build_development,
-    'build:clean': build_clean,
-}
+
+    deploy,
+
+    'clean:install': clean_install,
+    'clean:build': clean_build,
+    'clean:deploy': clean_deploy,
+};
