@@ -50,6 +50,15 @@ function install() {
 help(install, 'Install all dependencies in "src" folder');
 
 //
+// test
+//
+
+function cosmos() {
+    run(`cd ../src && yarn cosmos`);
+}
+help(cosmos, 'Start cosmos server for Playground-UI testing');
+
+//
 // local
 //
 
@@ -328,6 +337,7 @@ function toDockerEnvironmentArgs(envObj) {
 module.exports = {
     setup,
     install,
+    cosmos,
 
     'local': local_development,
     'local:development': local_development,
