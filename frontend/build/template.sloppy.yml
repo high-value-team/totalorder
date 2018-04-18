@@ -1,0 +1,11 @@
+version: "v1"
+project: "totalorder-frontend"
+services:
+  a:
+    b:
+      image: hvt1/totalorder-frontend
+      domain: "totalorder-frontend.sloppy.zone"
+      ports: 80
+      env:
+        - REACT_APP_BACKEND_URL: "https://totalorder-backend.sloppy.zone"
+      mem: 64

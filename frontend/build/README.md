@@ -21,22 +21,27 @@ yarn install
 
 `run [taskname]`
 
-e.g. `run start`
+e.g. `run local`
 
 Available tasks:
 ```
 setup                           - Create environment files, e.g. env.production. Please edit files with useful values!
 install                         - Install all dependencies in "src" folder
-start                           - Run frontend start scripts using env.development
-start:development               - Run frontend start scripts using env.development
-start:production                - Run frontend start scripts using env.production
-build                           - Run frontend build scripts using env.production
-build:production                - Run frontend build scripts using env.production
-build:development               - Run frontend build scripts using env.development
-deploy                          - Create deploy folder and deploy to Dropstack
+local                           - Run frontend start scripts using env.development
+local:development               - Run frontend start scripts using env.development
+local:production                - Run frontend start scripts using env.production
+docker:build                    - Build frontend and build docker image
+docker:start                    - Start docker container
+docker:stop                     - Stop docker container
+sloppy:publish                  - Push latest docker build to docker hub
+sloppy:delete                   - Delete existing project on sloppy.zone
+sloppy:deploy                   - Deploy to sloppy.zone
+dropstack:build                 - Create Dropstack folder
+dropstack:deploy                - Deploy to Dropstack
+clean:docker                    - Remove all "docker" folders
+clean:sloppy                    - Remove all "sloppy" folders
+clean:dropstack                 - Remove all "dropstack" folders
 clean:install                   - Remove installed libraries in "src" folder
-clean:build                     - Remove all "bin" folders
-clean:deploy                    - Remove all "deploy" folders
 ```
 
 Execute `run` to list all available tasks
