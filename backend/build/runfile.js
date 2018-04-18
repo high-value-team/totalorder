@@ -44,6 +44,14 @@ function setup() {
 }
 help(setup, 'Create environment files, e.g. env.production. Please edit files with useful values!');
 
+function install() {
+    // TODO install C# packages
+    // Currently done by opening the project with Jebrains Rider (will automatically load dependencies)
+    console.log("NOT IMPLEMENTED");
+}
+help(install, 'Install all dependencies in "src" folder');
+
+
 //
 // docker
 //
@@ -218,6 +226,11 @@ function clean_dropstack() {
 }
 help(clean_dropstack, 'Remove all "dropstack" folders');
 
+function clean_install() {
+    console.log("NOT IMPLEMENTED");
+}
+help(clean_install, 'Remove all C# dependencies');
+
 
 //
 // helper
@@ -292,6 +305,7 @@ function checkIsRunning(containerName) {
 
 module.exports = {
     setup,
+    install,
 
     'docker:build': docker_build,
     'docker:start': docker_start,
@@ -307,4 +321,5 @@ module.exports = {
     'clean:docker': clean_docker,
     'clean:dropstack': clean_dropstack,
     'clean:sloppy': clean_sloppy,
+    'clean:install': clean_install,
 };
