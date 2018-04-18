@@ -1,0 +1,5 @@
+FROM mono
+ADD ./app /app
+ENV TOTALORDER_BACKEND_DATABASEPATH=/mnt
+EXPOSE 80
+ENTRYPOINT mono /app/to.backend.exe
