@@ -21,6 +21,8 @@ yarn install
 
 `run [taskname]`
 
+(or if `run` is not available: `npx run [taskname]`)
+
 e.g. `run local`
 
 Available tasks:
