@@ -65,9 +65,9 @@ omelette@0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/omelette/-/omelette-0.4.5.tgz#f16bc477b7e263b59796a65661964e4762e9ae74"
 
-runjs@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/runjs/-/runjs-4.3.0.tgz#9ae23dab8f3c4aa2778b1619abbc39d7e5086360"
+runjs@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/runjs/-/runjs-4.3.2.tgz#fca376728bc01cd66cce734f3b41640de29f52ad"
   dependencies:
     chalk "2.3.0"
     lodash.padend "4.6.1"

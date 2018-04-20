@@ -11,22 +11,13 @@
 brew install node@9
 npm install -g npm@5.6.0
 npm install -g yarn@0.23.4
+npm install -g runjs@4.3.0
 ```
 
 install build dependencies
 ```
 yarn install
 ```
-
-# How to build the C# binary?
-
-For building the binary certain packages are needed. One way to download them is to use JetBrains Rider software.
-
-open with Rider: `totalorder/backend/src/to.backend/to.backend.sln`
-
-Rider will automatically load packages into the following folder: `totalorder/backend/src/to.backend/packages`
-
-Later execute `run docker:build` followed by `run docker:start`
 
 ## Run Tasks
 

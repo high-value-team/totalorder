@@ -65,6 +65,7 @@ function docker_build () {
     run(`mkdir -p ${binDir}/app/db`);
 
     run(`docker run -i -v ${binDir}/app:/binDir -v ${srcDir}:/srcDir mono sh << EOF 
+cd /srcDir/to.backend/ && nuget restore
 msbuild /p:OutDir=/binDir /srcDir/to.backend/to.backend.sln
 EOF`);
 
@@ -162,6 +163,7 @@ function dropstack_build () {
 
     // build executable
     run(`docker run -i -v ${binDir}/app:/binDir -v ${srcDir}:/srcDir mono sh << EOF 
+cd /srcDir/to.backend/ && nuget restore
 msbuild /p:OutDir=/binDir /srcDir/to.backend/to.backend.sln
 EOF`);
 
