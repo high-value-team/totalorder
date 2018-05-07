@@ -5,7 +5,7 @@ Bring items in order
 
 Read more about Totalorder: [Details](documentation/totalorder.md)
 
-live demo: https://totalorder-frontend.sloppy.zone
+live demo: https://totalorder.sloppy.zone
 
 ## frontend
 ```
