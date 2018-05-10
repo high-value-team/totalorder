@@ -6,6 +6,7 @@ import OrderItemsContainer from './containers/OrderItemsContainer';
 import InvitationContainer from "./containers/InvitationContainer";
 import SummaryContainer from "./containers/SummaryContainer";
 import ThankYouContainer from "./containers/ThankYouContainer";
+import ImprintContainer from "./containers/ImprintContainer";
 
 export default function getRoutes (history) {
     return (
@@ -15,6 +16,7 @@ export default function getRoutes (history) {
                 <Route path="/:projectID/summary" component={SummaryContainer} />
                 <Route path="/:projectID/items" component={OrderItemsContainer} />
                 <Route path="/:projectID/thank-you" component={ThankYouContainer} />
+                <Route path="/imprint" component={ImprintContainer} />
 
                 <IndexRoute component={CreateProjectContainer}/>
             </Route>
