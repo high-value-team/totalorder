@@ -105,6 +105,41 @@ function docker_build () {
 }
 help(docker_build, 'Build frontend and build docker image');
 
+function docker_prepare () {
+    const envFile = 'env.frontend';
+    console.log(`using ${envFile}`);
+
+    const binDir = `docker.${timestamp()}`;
+    const envObj = loadEnvironment(envFile);
+
+    // build frontend with ENV placeholders
+    run(`mkdir -p ${binDir}/app`);
+    run(`cd ../src && yarn build`, {env: envObj});
+    run(`cp -r ../src/build/ ${binDir}/app`);
+
+    // copy files
+    run(`cp template.nginx.default.conf ${binDir}/nginx.default.conf`);
+    run(`cp template.nginx.Dockerfile ${binDir}/Dockerfile`);
+    run(`cp template.nginx.replace.sh ${binDir}/replace.sh`);
+    run(`cp template.nginx.run.sh ${binDir}/run.sh`);
+}
+help(docker_prepare, 'Build project and prepare Dockerfile');
+
+function docker_build () {
+    const imageName = 'hvt1/totalorder-frontend';
+
+    docker_prepare();
+
+    const binPath = findNewestDockerFolder();
+    if (binPath === undefined) {
+        console.log('No bin-folder found. Please execute a "run docker:prepare" job first!');
+        return
+    }
+
+    run(`docker build --tag ${imageName} ${binPath}`);
+}
+help(docker_build, 'Build frontend and build docker image');
+
 function docker_start () {
     const localURL = '127.0.0.1:9020';
     const imageName = 'hvt1/totalorder-frontend';
@@ -254,6 +289,30 @@ function clean_install() {
 help(clean_install, 'Remove installed libraries in "src" folder');
 
 //
+// drone
+//
+
+function build_for_drone() {
+    clean_install();
+    install();
+    setup();
+    docker_prepare();
+    move_latest_docker_prepare_to_bin();
+}
+help(build_for_drone, 'Create bin directory with all artefacts for creating a docker image in the Drone-CI workflow.');
+
+function move_latest_docker_prepare_to_bin() {
+    const binPath = findNewestDockerFolder();
+    if (binPath === undefined) {
+        console.log('No bin-folder found. Please execute a "run docker:prepare" job first!');
+        return
+    }
+
+    run(`rm -rf ../bin`);
+    run(`mv ${binPath} ../bin`);
+}
+
+//
 // helper
 //
 
@@ -288,6 +347,18 @@ function loadEnvironment(envPath) {
 }
 
 function findNewestDropstackFolder() {
+    let binFolders = [];
+    fs.readdirSync('.').forEach(file => {
+        if (fs.statSync(file).isDirectory() && file.match(/^docker\.[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}$/)) {
+            const absolutePath = `${__dirname}/${file}`;
+            binFolders.push(absolutePath);
+        }
+    });
+    let sorted = binFolders.sort();
+    return sorted[sorted.length-1];
+}
+
+function findNewestDockerFolder() {
     let binFolders = [];
     fs.readdirSync('.').forEach(file => {
         if (fs.statSync(file).isDirectory() && file.match(/^docker\.[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{6}$/)) {
@@ -358,4 +429,6 @@ module.exports = {
     'clean:sloppy': clean_sloppy,
     'clean:dropstack': clean_dropstack,
     'clean:install': clean_install,
+
+    'build_for_drone': build_for_drone,
 };
