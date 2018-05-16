@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+  frontend:
+    image: hvt1/totalorder-frontend
+    ports:
+      - "8080:80"
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8081
+
+  backend:
+    image: hvt1/totalorder-backend
+    ports:
+      - "8081:80"
+    environment:
+      - TOTALORDER_BACKEND_DATABASEPATH=/mnt
