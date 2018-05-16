@@ -11,7 +11,7 @@ pipeline:
       - cp /app/src/github.com/high-value-team/totalorder/backend/build/template.docker.Dockerfile /app/src/github.com/high-value-team/totalorder/backend/bin/Dockerfile
       - cd /app/src/github.com/high-value-team/totalorder/backend/src/to.backend
       - nuget restore
-      - msbuild /p:OutDir=/app/src/github.com/high-value-team/totalorder/backend/bin/app totalorder.sln
+      - msbuild /p:OutDir=/app/src/github.com/high-value-team/totalorder/backend/bin/app to.backend.sln
 
   backend_docker:
     debug: true
