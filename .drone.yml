@@ -9,7 +9,7 @@ pipeline:
     commands:
       - mkdir -p /app/src/github.com/high-value-team/totalorder/backend/bin/app
       - cp /app/src/github.com/high-value-team/totalorder/backend/build/template.docker.Dockerfile /app/src/github.com/high-value-team/totalorder/backend/bin/Dockerfile
-      - cd /app/src/github.com/high-value-team/totalorder/backend/src/totalorder
+      - cd /app/src/github.com/high-value-team/totalorder/backend/src/to.backend
       - nuget restore
       - msbuild /p:OutDir=/app/src/github.com/high-value-team/totalorder/backend/bin/app totalorder.sln
 
