@@ -5,6 +5,7 @@ workspace:
 pipeline:
 
   backend_build:
+    debug: true
     image: library/mono
     commands:
       - mkdir -p /app/src/github.com/high-value-team/totalorder/backend/bin/app
@@ -22,6 +23,7 @@ pipeline:
     dockerfile: /app/src/github.com/high-value-team/totalorder/backend/bin/Dockerfile
 
   frontend_build:
+    debug: true
     image: node
     commands:
       - cd /app/src/github.com/high-value-team/totalorder/frontend/build
@@ -37,6 +39,7 @@ pipeline:
     dockerfile: /app/src/github.com/high-value-team/totalorder/frontend/bin/Dockerfile
 
   frontend_rancher:
+    debug: true
     image: peloton/drone-rancher
     url: http://hvt.zone:8080/v1
     service: totalorder/frontend
@@ -46,6 +49,7 @@ pipeline:
     timeout: 180
 
   backend_rancher:
+    debug: true
     image: peloton/drone-rancher
     url: http://hvt.zone:8080/v1
     service: totalorder/backend
