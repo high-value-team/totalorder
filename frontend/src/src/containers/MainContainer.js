@@ -62,7 +62,7 @@ class MainContainer extends React.Component {
                     {this.props.children}
                     <div style={{display:'flex', color: '#0000008a', fontSize:'10px',}}>
                         <p style={{flexGrow: '1'}}>{this.formatVersion(this.props.version)} - Brought to you by <a href="http://high-value-team.de" target="_blank" rel="noopener noreferrer">high-value-team.de</a></p>
-                        <p><Link to="/imprint">imprint</Link></p>
+                        <p><Link to="/imprint">imprint and data privacy policy</Link></p>
                     </div>
                 </div>
             </div>
